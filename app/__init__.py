@@ -13,12 +13,15 @@ from flask_mail import Mail
 from flask_security import SQLAlchemySessionUserDatastore, Security
 from app.models.auth import User, Role
 from app.models.avatar import Avatar
+from app.models.event import Event
+from app.models.image import Image
 from app.routes import (
     home_bp,
     auth_bp,
     dashboard_bp,
     users_bp,
-    api_bp
+    api_bp,
+    event_bp
 )
 
 
@@ -45,6 +48,7 @@ def create_app(config_class=Config):
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
     app.register_blueprint(users_bp, url_prefix='/users')
+    app.register_blueprint(event_bp, url_prefix='/events')
     app.register_blueprint(api_bp, url_prefix='/api')
 
     return app

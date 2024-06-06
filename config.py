@@ -4,7 +4,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
+    APP_NAME = os.environ.get('APP_NAME') or 'Flask-App'
+    FLASK_DEBUG = os.environ.get('FLASK_DEBUG') or True
 
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')

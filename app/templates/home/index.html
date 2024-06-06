@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/all.min.css') }}">
 
     <script defer src="{{ url_for('static',filename='js/alpinejs3.19.9.js') }}"></script>
-    <title>{% block title %} {% endblock %}</title>
+    <title>{{ config['APP_NAME'] }}</title>
 
     <style>
         [x-cloak] {
@@ -21,12 +21,12 @@
 
 <div class="content flex-grow">
 
-    <div class="w-full mx-auto lg:max-w-4xl">
-        <nav class="flex justify-between w-full lg:max-w-4xl bg-opacity-50 bg-amber-950 fixed">
+    <div class="w-full mx-auto lg:max-w-5xl">
+        <nav class="flex justify-between w-full lg:max-w-5xl bg-opacity-50 bg-amber-950 fixed">
             <a href="{{ url_for('home.index') }}"
                class="mt-4">
             <span class="text-xl px-8 py-2 text-gray-100">
-                Rođendanski bal
+                {{ config['APP_NAME'] }}
             </span>
             </a>
             <button @click="open = !open" type="button"
@@ -85,14 +85,14 @@
         </nav>
     </div>
 
-    <div class="w-full mx-auto lg:max-w-4xl pt-2">
+    <div class="w-full mx-auto lg:max-w-4xl">
 
         <div class="flex flex-col w-full justify-center items-center border-b border-gray-300 lg:flex-col lg:justify-evenly mt-20">
             <h1 class="text-4xl font-bold text-gray-900 text-balance mb-4 text-center">
                 445. rođendan Grada Karlovca
             </h1>
             <img class="w-full rounded-xl"
-                 src="{{ url_for('static', filename='images/posts/bal.jpg') }}" alt="Hero Image">
+                 src="{{ url_for('static', filename='image.py/posts/bal.jpg') }}" alt="Hero Image">
             <div class="py-4 px-2">
                 <h2 class="text-2xl font-bold text-black text-center mb-4">
                     Rođendanski bal povodom 455. rođendana Grada Karlovca

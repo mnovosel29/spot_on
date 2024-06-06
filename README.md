@@ -1,9 +1,30 @@
+# Work in Progress
+
+This project is currently under development. Some features might not work as expected.
+
+# SpotOn: The Efficient Event Booking Solution
+
+Simplify event ticketing and boost registrations with SpotOn. An efficient event booking solution for organizers.
+
 # Requirements:
 - Python 3.11
 - npm: '9.5.1',
 - node: '18.16.0'
 
-# Installation:
+## Installation
+
+Follow these steps to get the project up and running on your local machine:
+
+**Clone the repository:**
+
+```bash
+git clone https://github.com/mnovosel29/SpotOn.git
+```
+
+Navigate to the project directory:
+```bash
+cd SpotOn
+```
 
 Copy the `.env.example` file to `.env` and update the values as needed.
 
@@ -25,6 +46,10 @@ Watch changes in Tailwind CSS:
 npx tailwindcss -i ./app/static/src/input.css -o ./app/static/dist/css/output.css --watch
 ```
 
+Run the application:
+```bash
+flask run
+```
 
 # Adding Translations
 
@@ -36,6 +61,9 @@ This document outlines the steps involved in adding a new language for internati
 
 - A Flask application with Flask-Babel integration.
 - Basic familiarity with terminal commands and text editing.
+
+Add language in the application by adding a new language to the `LANGUAGES` configuration variable in the application's configuration file (`.env`). 
+This variable should be a comma-separated list of supported language codes (e.g., `en,hr,es`).
 
 **Steps**
 
