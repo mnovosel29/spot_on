@@ -1,0 +1,62 @@
+<!-- TODO: Add translation to navbar -->
+<nav class="bg-gray-900 border-gray-900" x-data="{ open: true, dropdownOpen: false }">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pl-12 p-4">
+        <a href="{{ url_for('home.index') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">
+                App
+            </span>
+        </a>
+        <button @click="open = !open" type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <i class="fas fa-bars"></i>
+        </button>
+        <div x-show="open" class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="font-medium flex items-center flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
+                <li>
+                    <a href="{{ url_for('users.index') }}"
+                       class="block py-2 px-3 rounded md:border-0 md:hover:text-blue-500 md:p-0 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
+                        {{ _('Users') }}
+                    </a>
+                </li>
+                {% if current_user.is_authenticated %}
+                    <li x-data="{ dropdownOpen: false }" @click.away="dropdownOpen = false">
+                        <a @click="dropdownOpen = !dropdownOpen"
+                           class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0">
+
+                            {% if current_user.avatar %}
+                                <img class="rounded-full"
+                                     src="data:image/png;base64,{{ current_user.avatar.image }}"
+                                     width="35px"
+                                     alt="{{ current_user.username }}">
+                            {% else %}
+                                <span class="text-gray-900 bg-white rounded-full p-1">
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                            {% endif %}
+
+                        </a>
+                        <ul x-show="dropdownOpen" class="absolute bg-gray-800 text-white mt-2 rounded-lg py-2" x-cloak>
+                            <li><a href="{{ url_for('auth.profile') }}"
+                                   class="block px-4 py-2 hover:bg-gray-700">{{ _('Profile') }}</a>
+                            </li>
+                            <li><a href="{{ url_for('security.logout') }}"
+                                   class="block px-4 py-2 hover:bg-gray-700">{{ _('Logout') }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ url_for('security.login') }}"
+                           class="block py-2 px-3 rounded md:border-0 md:hover:text-blue-500 md:p-0 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">{{ _('Login') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('security.register') }}"
+                           class="block py-2 px-3 rounded md:border-0 md:hover:text-blue-500 md:p-0 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">{{ _('Sign Up') }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

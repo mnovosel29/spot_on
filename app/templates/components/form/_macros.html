@@ -1,0 +1,82 @@
+{% macro render_field_with_errors(field) %}
+    <div class="mb-3 w-full" id="{{ field.id|default('fs-field') }}">
+        <label for="{{ field.id }}"
+               class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            {{ field.label.text }}
+        </label>
+        {{ field(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", **kwargs) }}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <span class="text-sm text-red-600">{{ _(error) }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro checkbox(field) %}
+    <div class="grid grid-cols-2 items-center">
+        <label for="{{ field.id }}" class="mb-1 text-sm font-medium text-gray-900 mr-3">
+            {{ field.label.text }}
+        </label>
+        {{ field(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-5 h-5", **kwargs) }}
+    </div>
+{% endmacro %}
+
+{% macro render_file_upload(field) %}
+    <div class="mb-3 w-full" id="{{ field.id|default('fs-field') }}">
+        <label for="{{ field.id }}"
+               class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+            {{ field.label.text }}
+        </label>
+        {{ field(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+        block w-full px-2.5", **kwargs) }}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <span class="text-sm text-red-600">{{ _(error) }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_field_as_checkboxes(field) %}
+    {% for value, label in field.choices %}
+        <div class="mb-3">
+            <label>
+                <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-5 h-5"
+                       type="checkbox" name="{{ field.name }}" value="{{ value }}"
+                        {% if value in field.data %} checked {% endif %}>
+                {{ label }}
+            </label>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_button(field) %}
+    <div class="flex">
+        {{ field(class="py-2.5 px-5 me-2 text-sm font-medium text-white focus:outline-none bg-gray-900 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700", **kwargs) }}
+    </div>
+{% endmacro %}
+
+{% macro render_form(form, action="#", method="POST", enctype="") %}
+    <div class="bg-white rounded-xl shadow p-4">
+        <form method="{{ method }}" action="{{ action }}" enctype="{{ enctype }}">
+            {% for field in form %}
+                {% if field.type == 'HiddenField' %}
+                    {{ field() }}
+                {% elif field.type == 'FileField' %}
+                    {{ render_file_upload(field) }}
+                {% elif field.type == 'SubmitField' %}
+                    {{ render_button(field, id='submit_' ~ range(1, 1000000)|random) }}
+                {% elif "csrf_token" in field.name %}
+                    {{ field(id='csrf_token_' ~ range(1, 1000000)|random) }}
+                {% elif field.type == 'BooleanField' %}
+                    {{ checkbox(field) }}
+                {% elif field.type == 'SelectMultipleField' %}
+                    {{ render_field_as_checkboxes(field) }}
+                {% else %}
+                    {{ render_field_with_errors(field) }}
+                {% endif %}
+            {% endfor %}
+        </form>
+    </div>
+{% endmacro %}

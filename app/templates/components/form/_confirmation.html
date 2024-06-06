@@ -1,0 +1,44 @@
+{% macro confirm_delete(form, action, method="POST") %}
+    <div x-data="{ show_confirm: false }">
+        <button x-on:click="show_confirm=true" type="button"
+                class="py-1 px-2 text-sm font-medium text-white focus:outline-none bg-gray-900 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+            {{ _('Delete') }}
+        </button>
+        <div x-show="show_confirm" x-cloak
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+            <div class="fixed inset-0 bg-gray-800 opacity-60"></div>
+            <div class="fixed top-12 left-0 w-full flex justify-center">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <form method="{{ method }}" action="{{ action }}">
+                        <div class="flex justify-center">
+                            <h2 class="text-lg text-red-500 font-semibold mb-2"><i
+                                    class="fa-solid fa-circle-exclamation mr-4"></i>{{ _('This action will delete record!') }}
+                            </h2>
+                        </div>
+                        <div class="flex justify-center">
+                            <p class="text mb-4">{{ _('Are you sure?') }}</p>
+                        </div>
+                        <div class="flex justify-between mt-8">
+                            <div>
+                                <button type="button" x-on:click="show_confirm=false"
+                                        class="py-2 px-4 text-sm font-medium text-white bg-gray-500 rounded hover:bg-gray-400">
+                                    <i class="fas fa-times mr-2"></i>{{ _('Cancel') }}
+                                </button>
+                            </div>
+                            <div class="flex">
+                                {% for field in form %}
+                                    {{ field(class="py-2 px-4 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-400", **kwargs) }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

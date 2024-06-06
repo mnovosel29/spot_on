@@ -1,0 +1,32 @@
+<nav class="p-6 w-full flex flex-col flex-wrap">
+    <ul class="space-y-1.5">
+        <li>
+            <a href="{{ url_for('dashboard.index') }}"
+                    {% if request.endpoint == 'dashboard.index' %}
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    {% else %}
+               class="flex items center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+                    {% endif %}
+            >
+                <i class="fa-solid fa-chart-pie"></i>
+                <strong>
+                    {{ _('Dashboard') }}
+                </strong>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('users.index') }}"
+                    {% if request.endpoint == 'users.index' %}
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    {% else %}
+               class="flex items center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+                    {% endif %}
+            >
+                <i class="fa-solid fa-users"></i>
+                <strong>
+                    {{ _('Users') }}
+                </strong>
+            </a>
+        </li>
+    </ul>
+</nav>

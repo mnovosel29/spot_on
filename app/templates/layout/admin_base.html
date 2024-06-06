@@ -1,0 +1,67 @@
+{% from 'components/alert/_top_alerts.html' import top_toast_with_category %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static',filename='dist/css/output.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/animations.css') }}">
+
+    <script defer src="{{ url_for('static',filename='js/alpinejs3.19.9.js') }}"></script>
+    <title>{% block title %} {% endblock %}</title>
+
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body class="h-full">
+
+<div x-data="{ open: window.innerWidth >= 1024, firstLoad: true }"
+     @resize.window="open = window.innerWidth >= 1024; firstLoad = false;" class="flex">
+    <aside x-bind:class="{ 'sidebar-open-animation': open && !firstLoad, 'sidebar-close-animation': !open, 'z-50': open }"
+           class="fixed top-0 left-0 bottom-0 z-60 w-96 h-screen bg-gray-900 text-white pt-2 pb-10 overflow-y-auto lg:static">
+
+        <div class="flex justify-between py-3">
+            <div class="px-6">
+                <a class="text-xl font-semibold text-white" href="#" aria-label="Brand">
+                    <i class="fa-brands fa-black-tie"></i> Admin template
+                </a>
+            </div>
+            <button type="button" class="text-gray-500 hover:text-gray-600 px-4 lg:hidden" @click="open = !open">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+
+        {% include 'layout/admin_side_nav.html' %}
+
+    </aside>
+
+    <!-- Main content -->
+    <div class="flex flex-col h-screen fixed top-0 left-0 bottom-0 z-60 w-full bg-gray-200 pb-10 overflow-y-auto lg:translate-x-0 lg:static lg:overflow-visible"
+         x-bind:class="{ 'main-content-sidebar-open-animation': open && !firstLoad, 'main-content-sidebar-close-animation': !open }">
+        <header class="bg-gray-900 pl-4">
+            {% include 'layout/admin_header.html' %}
+        </header>
+        <main class="flex-1 overflow-y-auto">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <div>
+                        {% for message in messages %}
+                            {{ top_toast_with_category(message) }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block content %} {% endblock %}
+        </main>
+    </div>
+</div>
+</body>
+</html>

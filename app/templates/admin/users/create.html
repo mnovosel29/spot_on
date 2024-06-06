@@ -1,0 +1,19 @@
+{% extends 'layout/admin_base.html' %}
+
+{% from 'components/form/_macros.html' import render_form %}
+
+{% block content %}
+
+    <div class="grid place-items-baseline px-6">
+        <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
+            <div class="mt-4">
+                <strong> {{ _('Create user') }}</strong>
+                <p class="text-sm">{{ _('Here you can create new user') }}</p>
+            </div>
+            <div class="mt-4">
+                {{ render_form(user_create_form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

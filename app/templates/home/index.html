@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static',filename='dist/css/output.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/all.min.css') }}">
+
+    <script defer src="{{ url_for('static',filename='js/alpinejs3.19.9.js') }}"></script>
+    <title>{% block title %} {% endblock %}</title>
+
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+<body class="flex h-full bg-amber-50">
+
+<div class="content flex-grow">
+
+    <div class="w-full mx-auto lg:max-w-4xl">
+        <nav class="flex justify-between w-full lg:max-w-4xl bg-opacity-50 bg-amber-950 fixed">
+            <a href="{{ url_for('home.index') }}"
+               class="mt-4">
+            <span class="text-xl px-8 py-2 text-gray-100">
+                Rođendanski bal
+            </span>
+            </a>
+            <button @click="open = !open" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    aria-controls="navbar-default" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <i class="fas fa-bars"></i>
+            </button>
+            <div x-show="open" class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="font-medium flex items-center p-4 flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+                    <li>
+                        <a href="{{ url_for('users.index') }}"
+                           class="text-gray-100">
+                            {{ _('Users') }}
+                        </a>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                        <li x-data="{ dropdownOpen: false }" @click.away="dropdownOpen = false">
+                            <a @click="dropdownOpen = !dropdownOpen"
+                               class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0">
+
+                                {% if current_user.avatar %}
+                                    <img class="rounded-full"
+                                         src="data:image/png;base64,{{ current_user.avatar.image }}"
+                                         width="35px"
+                                         alt="{{ current_user.username }}">
+                                {% else %}
+                                    <span class="text-gray-900 bg-white rounded-full p-1">
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                                {% endif %}
+
+                            </a>
+                            <ul x-show="dropdownOpen" class="absolute bg-gray-900 bg-opacity-75 text-white mt-2 py-2"
+                                x-cloak>
+                                <li><a href="{{ url_for('auth.profile') }}"
+                                       class="block px-4 py-2 hover:bg-gray-900 hover:bg-opacity-90">{{ _('Profile') }}</a>
+                                </li>
+                                <li><a href="{{ url_for('security.logout') }}"
+                                       class="block px-4 py-2 hover:bg-gray-900 hover:bg-opacity-90">{{ _('Logout') }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ url_for('security.login') }}"
+                               class="text-gray-100">{{ _('Login') }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('security.register') }}"
+                               class="text-gray-100">{{ _('Sign Up') }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="w-full mx-auto lg:max-w-4xl pt-2">
+
+        <div class="flex flex-col w-full justify-center items-center border-b border-gray-300 lg:flex-col lg:justify-evenly mt-20">
+            <h1 class="text-4xl font-bold text-gray-900 text-balance mb-4 text-center">
+                445. rođendan Grada Karlovca
+            </h1>
+            <img class="w-full rounded-xl"
+                 src="{{ url_for('static', filename='images/posts/bal.jpg') }}" alt="Hero Image">
+            <div class="py-4 px-2">
+                <h2 class="text-2xl font-bold text-black text-center mb-4">
+                    Rođendanski bal povodom 455. rođendana Grada Karlovca
+                </h2>
+                <p class="text text-gray-700">
+                    Karlovac je jedan od rijetkih gradova koji točno zna datum svog postanka, svog “rođenja”, 13. 7.
+                    1579. Svake godine na taj dan u srcu grada održava se rođendanski bal na kojem svi koji požele mogu
+                    zaplesati valcer Karlovcu u čast. Iz godine u godinu broj parova se povećava u skladu s godinama
+                    grada, pa će tako ove godine na taktove bečkog i engleskog valcera plesati čak 445 plesnih parova.
+                </p>
+                <p class="text-lg font-bold text-gray-700 my-4">
+                    Ovogodišnji rođendanski bal održat će se na igralištu
+                    kod Sokolskog doma u subotu, 13. srpnja 2024. godine s početkom u 20 sati.
+                </p>
+            </div>
+        </div>
+        <div class="w-full mx-auto lg:max-w-4xl">
+            <div x-data="{ show_position: false, x_position: 0, y_position: '' }"
+                 class="w-full mt-4">
+                <h1 class="text-2xl font-bold text-gray-900 text-center mb-4 w-full">
+                    {{ _('Reserve your place, NOW!!!') }}
+                </h1>
+                <div class="w-full flex justify-evenly flex-col align-items-center md:flex-row ">
+                    <div class="w-full justify-center p-2 mb-4 md:rounded md:shadow-lg md:border-r md:border-gray-200 md:mr-4 bg-amber-50">
+                        <h1 class="text font-bold text-white text-center bg-amber-950 rounded mb-2 p-1 w-full">
+                            {{ _('Stage') }}
+                        </h1>
+                        <table class="w-full overflow-auto">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                {% for x in range(20) %}
+                                    <th class="text-center text-gray-900 font-bold mb-1">{{ x + 1 }}</th>
+                                {% endfor %}
+                            </tr>
+                            {% for y in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'] %}
+                                <tr>
+                                    <td class="text-center mr-4 text-gray-900 font-bold">{{ y }}</td>
+                                    {% for x in range(20) %}
+                                        <td @click="show_position = true; x_position = {{ x + 1 }}; y_position = '{{ y }}'"
+                                            class="text-center text-xs cursor-pointer">
+                                            {% if x % 2 == 0 %}
+                                                <div class="p-1 rounded-full">
+                                                    <i class="fa-solid fa-star text-green-400"></i>
+                                                </div>
+                                            {% elif x % 5 == 0 %}
+                                                <div class="p-1">
+                                                    <i class="fa-regular fa-star text-yellow-300"></i>
+                                                </div>
+                                            {% else %}
+                                                <div class="p-1 rounded-full">
+                                                    <i class="fa-regular fa-circle-xmark text-gray-400"></i>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </thead>
+                        </table>
+
+                    </div>
+                    <div class="w-full border-t border-gray-200 bg-amber-50 md:rounded md:shadow-lg h-fit md:border-0">
+                        <div class="p-2">
+                            <ul>
+                                <li class="flex items-center ml-2 mb-2">
+                                    <p class="text-xl font-bold">
+                                        {{ _('Legend') }}:
+                                    </p>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="p-1 rounded-full">
+                                        <i class="fa-solid fa-star text-red-600 "></i>
+                                    </div>
+                                    <p class="">
+                                        {{ _('My position') }}
+                                    </p>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="p-1 rounded-full">
+                                        <i class="fa-solid fa-star text-green-400"></i>
+                                    </div>
+                                    <p class="">
+                                        {{ _('Occupied') }}
+                                    </p>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="p-1">
+                                        <i class="fa-regular fa-star text-yellow-300"></i>
+                                    </div>
+                                    <p class="">
+                                        {{ _('Free') }}
+                                    </p>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="p-1 rounded-full">
+                                        <i class="fa-regular fa-circle-xmark text-gray-400"></i>
+                                    </div>
+                                    <p class="">
+                                        {{ _('Not available') }}
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div x-show="show_position" class="fixed z-10 inset-0 overflow-y-auto"
+                     x-transition:enter="ease-out duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="ease-in duration-300"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0"
+
+                     aria-labelledby="modal-title" role="dialog" aria-modal="true" x-cloak>
+                    <div class="flex items end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                             aria-hidden="true"></div>
+
+
+                        <div x-show="show_position"
+                             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden h-fit shadow-xl transform transition-all max-w-sm sm:my-8 sm:align-middle  sm:w-full"
+                             role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-start">
+                                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                        {% if current_user.is_authenticated %}
+                                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                                                {{ _('Position') }}
+                                            </h3>
+                                            <div class="mt-2">
+                                                <p class="text-sm text-gray-500">
+                                                    {{ _('The position is occupied') }}
+                                                    <strong>{{ _('Position') }}:
+                                                    </strong>
+                                                    X: <span x-text="x_position"></span>,
+                                                    Y: <span x-text="y_position"></span>
+                                                </p>
+                                            </div>
+                                        {% else %}
+                                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                                                {{ _('Position') }} X: <span x-text="x_position"></span>, Y: <span
+                                                    x-text="y_position"></span>
+                                            </h3>
+                                            <div class="mt-2">
+                                                <p class="text-sm text-gray-500">
+                                                    {{ _('You must be logged in to reserve a position') }}
+                                                </p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button @click="show_position = false" type="button"
+                                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                    {{ _('Close') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

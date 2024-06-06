@@ -1,0 +1,22 @@
+<div class="flex items-center justify-between h-16">
+    <div x-show="!open" class="flex items-center gap-x-3" x-cloak>
+        <button type="button" class="text-gray-500 hover:text-gray-600 mr-4"
+                @click="open = !open; firstLoad = false;"
+                aria-controls="docs-sidebar" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a class="flex-none text-xl font-semibold text-white" href="#" aria-label="Brand">
+            <i class="fa-brands fa-black-tie"></i> Admin template
+        </a>
+    </div>
+    <div class="pr-4 pl-2">
+        {% if current_user.has_role('Admin') %}
+                <div class="flex items-baseline gap-6">
+                    <a href="/" class="text-white hover:text-gray-300">{{ _('Home') }}</a>
+                    <a href="/logout" class="text-white hover:text-gray-300">{{ _('Logout') }}</a>
+                </div>
+        {% else %}
+            <a href="/login" class="text-white hover:text-gray-300">{{ _('Login') }}</a>
+        {% endif %}
+    </div>
+</div>

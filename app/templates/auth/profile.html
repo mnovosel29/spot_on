@@ -1,0 +1,70 @@
+{% extends 'layout/base.html' %}
+{% from "components/form/_macros.html" import render_form, render_button %}
+{% from "components/form/_confirmation.html" import confirm_delete %}
+{% from "components/alert/_top_alerts.html" import top_toast_with_category %}
+
+{% block content %}
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    {{ top_toast_with_category(message) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+    <div class="grid place-items-center px-3">
+
+        <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
+            <div class="mt-4">
+                <strong>{{ _('Profile information') }}</strong>
+                <p class="text-sm">{{ _('Update your First and Last name') }}</p>
+            </div>
+            <div class="mt-4">
+                {{ render_form(name_form, action=url_for('auth.profile_name')) }}
+            </div>
+        </div>
+
+        <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
+            <div class="mt-4">
+                <strong>{{ _('Email') }}</strong>
+                <p class="text-sm">{{ _('Update your E-mail') }}</p>
+            </div>
+            <div class="mt-4">
+                {{ render_form(email_form, action=url_for('auth.profile_email')) }}
+            </div>
+        </div>
+
+        <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
+            <div class="mt-4">
+                <strong>{{ _('Password') }}</strong>
+                <p class="text-sm">{{ _('Update your password') }}</p>
+            </div>
+            <div class="mt-4">
+                {{ render_form(change_password_form, action=url_for('auth.profile_password')) }}
+            </div>
+        </div>
+
+        <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
+            <div class="mt-4">
+                <strong> {{ _('User Avatar') }}</strong>
+                <p class="text-sm">{{ _('Here you can update or change user avatar') }}</p>
+            </div>
+            <div class="mt-4">
+                {% if user.avatar %}
+                    <div class="flex items-center justify-between bg-white shadow-lg rounded-xl p-4 mb-4">
+                        <img class="rounded-full" src="data:image/png;base64,{{ user.avatar.image }}"
+                             alt="User Avatar">
+                        {{ confirm_delete(avatar_delete_form, action=url_for('auth.delete_avatar')) }}
+                    </div>
+                {% endif %}
+                {{ render_form(avatar_form, action=url_for('auth.update_avatar'), enctype="multipart/form-data") }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

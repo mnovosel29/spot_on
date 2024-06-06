@@ -1,0 +1,45 @@
+{% macro top_toast_with_category(message) %}
+    {% if message[0] == 'success' %}
+        {% set alert_class = 'bg-green-100 border-green-300 text-green-700' %}
+        {% set icon_class = 'fa-check-circle' %}
+        {% set progress_bar_class = 'bg-green-500' %}
+    {% elif message[0] == 'error' %}
+        {% set alert_class = 'bg-red-100 border-red-300 text-red-700' %}
+        {% set icon_class = 'fa-exclamation-triangle' %}
+        {% set progress_bar_class = 'bg-red-500' %}
+    {% elif message[0] == 'info' %}
+        {% set alert_class = 'bg-blue-100 border-blue-300 text-blue-700' %}
+        {% set icon_class = 'fa-info-circle' %}
+        {% set progress_bar_class = 'bg-blue-500' %}
+    {% endif %}
+
+    <div x-data="{ show_alert: false, width: 0, timer: null }" x-show="show_alert" x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform -translate-y-full"
+         x-transition:enter-end="opacity-100 transform translate-y-0"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100 transform translate-y-0"
+         x-transition:leave-end="opacity-0 transform -translate-y-full"
+         x-init="show_alert = false; setTimeout(() => { show_alert = true; timer = setInterval(() => { width += 1; if (width >= 100) { clearInterval(timer); show_alert = false; } }, 20); }, 100);"
+         class="fixed p-6 top-16 left-0 z-50 w-full">
+        <div class="flex justify-center md:justify-end">
+            <div class="{{ alert_class }} rounded-lg border shadow-md md:min-w-96">
+                <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                        <i class="fas {{ icon_class }}"></i>
+                        <p class="ml-3 text-sm">
+                            <span class="font-medium">{{ message[1] }}</span>
+                        </p>
+                    </div>
+                    <button @click="show_alert = false; clearInterval(timer);"
+                            class="text-gray-400 hover:text-gray-500 ml-4">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+                <div class="h-1">
+                    <div class="{{ progress_bar_class }} h-full rounded-b-lg" :style="'width: ' + width + '%'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

@@ -1,0 +1,153 @@
+{% extends 'layout/admin_base.html' %}
+{% from "components/table/_table.html" import table, thead, th_class, tbody, tr_class, td_class %}
+{% from "components/table/_small_screen_table.html" import small_screen_table, small_screen_table_thead, small_screen_table_th, small_screen_table_tbody, accordion, accordion_row, accordion_url_to, accordion_body %}
+{% from "components/table/_common_elements.html" import paginate, search, create_new %}
+
+{% block content %}
+
+    <div class="w-auto p-6"
+         x-data="{
+             end_point: '/api/users',
+             search: '',
+             items: [],
+             old_page: 0,
+             page: 1,
+             per_page: 10,
+             total: 0,
+             pages: 0,
+             fetchItems: fetchItems,
+             prevPage: prevPage,
+             nextPage: nextPage,
+             sort_by: 'id',
+             direction: 'asc'
+         }"
+         x-init="fetchItems('id')">
+
+        <div class="bg-white p-6 rounded-lg shadow-md max-w-6xl">
+            <h2 class="text-2xl text-gray-500 mb-4">
+                <strong>{{ _('Users') }}</strong>
+            </h2>
+
+            <div class="flex justify-between items-center mb-4">
+                {{ create_new('/users/create', 'Create user') }}
+                {{ search('default-search', 'search', 'fetchItems()') }}
+            </div>
+
+            <div class="hidden md:block">
+                {% call table() %}
+                    {% call thead() %}
+                        {{ th_class("ID", "id") }}
+                        {{ th_class("First name", "first_name") }}
+                        {{ th_class("Last name", "last_name") }}
+                        {{ th_class("Email", "email") }}
+                        {{ th_class("Active", "active") }}
+                    {% endcall %}
+                    {% call tbody() %}
+                        <template x-for="user in items" :key="user.id">
+                            <tr class="hover:bg-gray-200 hover:cursor-pointer"
+                                @click="window.location.href = '/users/' + user.id">
+                                {{ td_class('user.id') }}
+                                {{ td_class('user.first_name') }}
+                                {{ td_class('user.last_name') }}
+                                {{ td_class('user.email') }}
+                                {{ td_class('user.active') }}
+                            </tr>
+
+                        </template>
+                    {% endcall %}
+                {% endcall %}
+            </div>
+
+            <div class="block md:hidden">
+
+                {% call small_screen_table() %}
+                    {% call small_screen_table_thead() %}
+                        {{ small_screen_table_th("Email") }}
+                    {% endcall %}
+                    {% call small_screen_table_tbody() %}
+                        <template x-for="(user, index) in items" :key="user.id">
+                            {% call accordion() %}
+                                {% call accordion_url_to() %}
+                                    <span @click="window.location.href = '/users/' + user.id;"
+                                          x-text="user.email"
+                                          class="w-full">
+                                    </span>
+                                {% endcall %}
+                                {% call accordion_body() %}
+                                    {% call accordion_row('ID') %}
+                                        <td class="p-2" x-text="user.id"></td>
+                                    {% endcall %}
+                                    {% call accordion_row('First name') %}
+                                        <td class="p-2" x-text="user.first_name"></td>
+                                    {% endcall %}
+                                    {% call accordion_row('Last name') %}
+                                        <td class="p-2" x-text="user.last_name"></td>
+                                    {% endcall %}
+                                {% endcall %}
+                            {% endcall %}
+                        </template>
+                    {% endcall %}
+                {% endcall %}
+            </div>
+
+            {{ paginate('prevPage', 'nextPage', 'page', 'pages') }}
+        </div>
+    </div>
+
+    <script>
+        function fetchItems(sort_by) {
+            if (this.sort_by === sort_by && this.old_page === this.page) {
+                this.direction = this.direction === 'asc' ? 'desc' : 'asc';
+            }
+
+            if (this.sort_by !== sort_by && this.old_page === this.page) {
+                this.direction = 'asc';
+            }
+
+            if (sort_by !== undefined) {
+                this.sort_by = sort_by;
+                this.page = 1;
+            }
+            this.old_page = this.page;
+
+            fetch(this.end_point, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': 'csrf_token'
+                },
+                body: JSON.stringify({
+                    search: this.search,
+                    page: this.page,
+                    per_page: this.per_page,
+                    sort_by: this.sort_by,
+                    sort_direction: this.direction
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    this.items = data.items;
+                    this.total = data.total;
+                    this.page = data.page;
+                    this.per_page = data.per_page;
+                    this.pages = data.pages;
+                });
+        }
+
+        function prevPage() {
+            if (this.page > 1) {
+                this.page--;
+                this.fetchItems();
+            }
+        }
+
+        function nextPage() {
+            if (this.page < this.pages) {
+                this.page++;
+                this.fetchItems();
+            }
+        }
+    </script>
+
+{% endblock %}

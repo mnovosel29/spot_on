@@ -1,0 +1,38 @@
+{% macro table() %}
+    <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200 table-auto">
+                        {{ caller() }}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro thead(class="text-white bg-gray-900") %}
+    <thead class="{{ class }}">
+    {{ caller() }}
+    </thead>
+{% endmacro %}
+
+{% macro th_class(content, sort_by, class="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider cursor-pointer") %}
+    <th scope="col" class="{{ class }}" @click="fetchItems('{{ sort_by }}')">
+        {{ _(content) }}
+        <i :class="{'fa fa-arrow-up': sort_by === '{{ sort_by }}' && direction === 'asc', 'fa fa-arrow-down': sort_by === '{{ sort_by }}' && direction === 'desc', 'fa fa-arrows-v': sort_by !== '{{ sort_by }}'}"></i>
+    </th>
+{% endmacro %}
+
+{% macro tbody(class="bg-white divide-y divide-gray-200") %}
+    <tbody class="{{ class }}">
+    {{ caller() }}
+    </tbody>
+{% endmacro %}
+
+{% macro td_class(content, class="px-4 py-2") %}
+    <td class="{{ class }}">
+        <div class="text-sm text-gray-900" x-text="{{ content }}"></div>
+    </td>
+{% endmacro %}

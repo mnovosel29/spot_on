@@ -1,0 +1,54 @@
+{% macro render_field_with_errors(field) %}
+    <div class="mt-3" id="{{ field.id|default('fs-field') }}">
+        <label for="{{ field.id }}"
+               class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ field.label.text }}</label>
+        {{ field(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", **kwargs) }}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <span class="text-sm text-red-600">{{ _(error) }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_button(field) %}
+    <div class="mt-6 flex items-center justify-center">
+        {{ field(class="py-2.5 px-5 me-2 text-sm font-medium text-white focus:outline-none bg-gray-900 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700", **kwargs) }}
+    </div>
+{% endmacro %}
+
+{% macro render_remember_me(field) %}
+    <div class="flex items-center mt-4 mb-4">
+        {{ field(class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 rounded", **kwargs) }}
+        <label for="remember-me" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            {{ _('Remember me') }}
+        </label>
+    </div>
+{% endmacro %}
+
+{% macro render_field_errors(field) %}
+    <div class="fs-div" id="{{ field.id if field else 'fs-field' }}">
+        {% if field and field.errors %}
+            <ul>
+                {% for error in field.errors %}
+                    <li class="fs-error-msg">{{ error }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{# render WTForms (>3.0) form level errors #}
+{% macro render_form_errors(form) %}
+    {% if form.form_errors %}
+        <div class="fs-div" id="fs-form-errors">
+            <ul>
+                {% for error in form.form_errors %}
+                    <li class="fs-error-msg">{{ error }}</li>{% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro prop_next() -%}
+    {% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}
+{%- endmacro %}

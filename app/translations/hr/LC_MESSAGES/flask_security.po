@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+
+msgid "Email Address"
+msgstr "Email adresa"
+
+msgid "Password"
+msgstr "Lozinka"
+
+msgid "Reset password"
+msgstr "Resetiraj lozinku"
+
+msgid "Retype Password"
+msgstr "Ponovite lozinku"
+
+msgid "Invalid email or password!"
+msgstr "Netočno korisničko ime ili lozinka!"
+
+msgid "Email is not confirmed, please confirm Email."
+msgstr "Email nije potvrđen, molimo potvrdite email."
+
+msgid "Thank you. Email is confirmed."
+msgstr "Hvala vam. Email je potvrđen."
+
+msgid "Email is already confirmed."
+msgstr "Email je već potvrđen."
+
+msgid "Invalid confirmation token."
+msgstr "Netočan token za potvrdu."
+
+msgid "Instructions to reset your password have been sent"
+msgstr "Upute za resetiranje lozinke su poslane"
+
+msgid "Instructions to reset your password have been sent"
+msgstr "Upute za resetiranje lozinke su poslane"
+
+msgid "Thank you. Confirmation instructions have been sent to your email"
+msgstr "Hvala vam. Upute za potvrdu su poslane na vaš email."
+
+msgid "Account is disabled."
+msgstr "Račun je onemogućen."
+
+msgid "You successfully reset your password. Please login."
+msgstr "Uspješno ste resetirali lozinku. Molimo prijavite se."
+
+msgid "You do not have permission to view this resource."
+msgstr "Nemate dozvolu za pregled ovog resursa."
+
+msgid "You must be logged in to view this resource."
+msgstr "Morate biti prijavljeni za pregled ovog resursa."
