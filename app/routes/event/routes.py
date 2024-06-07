@@ -108,11 +108,12 @@ def add_image(event_id):
     return redirect(url_for('event.detail', event_id=event_id))
 
 
-@bp.route('/<int:event_id>/delete_image', methods=['POST'])
+@bp.route('/delete_image/<int:image_id>/', methods=['POST'])
 @roles_required('Admin')
-def delete_image(event_id, image_id):
-    image_id = image_id
+def delete_image(image_id):
     image = EventImage.query.get(image_id)
+    event_id = image.event_id
+    flash(image_id, 'success')
     db.session.delete(image)
     db.session.commit()
     flash(gettext('Image deleted successfully.'), 'success')
