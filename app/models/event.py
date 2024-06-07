@@ -16,7 +16,6 @@ class Event(db.Model):
     id = Column(Integer(), primary_key=True)
     title = Column(String(255), nullable=False)
     description = Column(Text(), nullable=True)
-    image_id = Column(String(255), nullable=True)
     starts_at = Column(DateTime(), nullable=False)
     created_at = Column(DateTime(), default=datetime.utcnow)
     updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)

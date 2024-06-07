@@ -18,7 +18,7 @@ Follow these steps to get the project up and running on your local machine:
 **Clone the repository:**
 
 ```bash
-git clone https://github.com/mnovosel29/SpotOn.git
+git clone https://github.com/mnovosel29/spot_on.git
 ```
 
 Navigate to the project directory:

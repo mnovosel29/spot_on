@@ -14,7 +14,7 @@ from flask_security import SQLAlchemySessionUserDatastore, Security
 from app.models.auth import User, Role
 from app.models.avatar import Avatar
 from app.models.event import Event
-from app.models.image import Image
+from app.models.event_image import EventImage
 from app.routes import (
     home_bp,
     auth_bp,

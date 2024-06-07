@@ -28,5 +28,18 @@
                 </strong>
             </a>
         </li>
+        <li>
+            <a href="{{ url_for('event.index') }}"
+                    {% if request.endpoint == 'event.index' %}
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    {% else %}
+               class="flex items center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+                    {% endif %}
+            >
+                <i class="fa-regular fa-calendar-plus"></i>
+                <strong>
+                    {{ _('Events') }}
+                </strong>
+            </a>
     </ul>
 </nav>
