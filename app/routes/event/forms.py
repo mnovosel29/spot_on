@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SubmitField, TextAreaField, HiddenField
+from wtforms import StringField, SubmitField, TextAreaField, HiddenField, IntegerField
 from wtforms.fields.datetime import DateTimeLocalField
 from wtforms.validators import DataRequired, Length
 from flask_babel import lazy_gettext, gettext
@@ -39,3 +39,22 @@ class EventUpdateForm(FlaskForm):
 
 class EventImageDeleteForm(FlaskForm):
     submit = SubmitField(lazy_gettext('Delete'))
+
+
+class EventDeleteForm(FlaskForm):
+    submit = SubmitField(lazy_gettext('Delete'))
+
+
+class EventCreateSeatsForm(FlaskForm):
+    event_id = HiddenField()
+    number_of_columns = IntegerField(lazy_gettext('Number of columns'), validators=[
+        DataRequired(gettext(u'This field is required.')),
+    ])
+    number_of_rows = IntegerField(lazy_gettext('Number of rows'), validators=[
+        DataRequired(gettext(u'This field is required.')),
+    ])
+    submit = SubmitField(lazy_gettext('Add seats'))
+
+
+class EventMakeSeatNotAvailableForm(FlaskForm):
+    submit = SubmitField(lazy_gettext('Make not available'))

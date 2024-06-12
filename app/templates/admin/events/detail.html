@@ -40,18 +40,49 @@
             <div class="mt-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {% for image in event.images %}
+                        {% set previous_base_64 = event.images[loop.index - 2].base_64 if loop.index > 1 else None %}
+                        {% set next_base_64 = event.images[loop.index].base_64 if loop.index < event.images|length else None %}
                         <div class="relative">
-                            <img src="data:image/png;base64,{{ image.base_64 }}" class="w-full h-48 object-cover" alt="">
+                            <img src="data:image/png;base64,{{ image.base_64 }}" class="w-full h-48 object-cover"
+                                 alt="">
                             <div class="absolute bottom-0 right-0 p-2">
                                 {{ confirm_delete(event_image_delete_form, action=url_for('event.delete_image', image_id=image.id)) }}
                             </div>
                             <div class="absolute bottom-0 left-0 p-2">
-                                {{ show_image(image.base_64) }}
+                                {{ show_image(image.base_64, previous_base_64, next_base_64) }}
                             </div>
                         </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="grid place-items-baseline px-6">
+        <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
+            <div class="mt-4">
+                <strong> {{ _('Stage') }}</strong>
+                <p class="text-sm">{{ _('Here you can add or update stage') }}</p>
+            </div>
+            <div class="mt-4">
+                <a href="{{ url_for('event.seats', event_id=event.id) }}"
+                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    {{ _('Add seats') }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid place-items-baseline px-6">
+        <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
+            <div class="mt-4">
+                <strong> {{ _('Delete event') }}</strong>
+                <p class="text-sm">{{ _('Here you can delete images') }}</p>
+            </div>
+            <div class="mt-4">
+                {{ confirm_delete(event_delete_form, action=url_for('event.delete', event_id=event.id)) }}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

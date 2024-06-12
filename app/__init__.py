@@ -14,6 +14,8 @@ from flask_security import SQLAlchemySessionUserDatastore, Security
 from app.models.auth import User, Role
 from app.models.avatar import Avatar
 from app.models.event import Event
+from app.models.seat import Seat
+from app.models.reservation import Reservation
 from app.models.event_image import EventImage
 from app.routes import (
     home_bp,
@@ -21,7 +23,8 @@ from app.routes import (
     dashboard_bp,
     users_bp,
     api_bp,
-    event_bp
+    event_bp,
+    seat_bp
 )
 
 
@@ -50,5 +53,6 @@ def create_app(config_class=Config):
     app.register_blueprint(users_bp, url_prefix='/users')
     app.register_blueprint(event_bp, url_prefix='/events')
     app.register_blueprint(api_bp, url_prefix='/api')
+    app.register_blueprint(seat_bp, url_prefix='/seats')
 
     return app

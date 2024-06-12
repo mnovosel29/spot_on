@@ -1,0 +1,95 @@
+{% from 'components/form/_macros.html' import render_form %}
+
+{% macro render_icon(status) %}
+    {% if status == 'available' %}
+        <i class="fa-regular fa-star text-yellow-300"></i>
+    {% elif status == 'not_available' %}
+        <i class="fa-regular fa-circle-xmark text-gray-400"></i>
+    {% elif status == 'occupied' %}
+        <i class="fa-solid fa-star text-green-400"></i>
+    {% elif status == 'my_position' %}
+        <i class="fa-solid fa-star text-red-600 "></i>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_seats(seats, reserve_seat_form) %}
+    <div class="">
+        <h1 class="text font-bold text-white text-center bg-amber-950 rounded mb-2 p-1 w-full">
+            {{ _('Stage') }}
+        </h1>
+        <table class="w-full p-2">
+            <thead>
+            <tr>
+                <th></th>
+                {% set ns = namespace(unique_x_axis=[]) %}
+                {% for seat in seats %}
+                    {% if seat.x_axis not in ns.unique_x_axis %}
+                        <th>{{ seat.x_axis }}</th>
+                        {% set _ = ns.unique_x_axis.append(seat.x_axis) %}
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% set ns = namespace(last_row=None) %}
+            {% for seat in seats %}
+                {% if loop.first or ns.last_row != seat.y_axis %}
+                    {% if not loop.first %}
+                        </tr>
+                    {% endif %}
+                    <tr>
+                    <td>{{ seat.y_axis }}</td>
+                {% endif %}
+            <td>
+                <div class="p-1">
+
+                    <p>{{ seat.reserved_by.user_id }}</p>
+
+                    {{ render_modal(seat, reserve_seat_form) }}
+
+                </div>
+            </td>
+
+            {% if loop.last %}
+                </tr>
+            {% endif %}
+                {% set ns.last_row = seat.y_axis %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endmacro %}
+
+{% macro render_modal(seat, reserve_seat_form) %}
+    <div x-data="{ open: false }">
+        <!-- Button to open the modal -->
+        <button @click="open = true" class="">
+            {{ render_icon(seat.status) }}
+        </button>
+
+        <!-- Modal -->
+        <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
+             role="dialog" aria-modal="true" x-cloak>
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                     aria-hidden="true"></div>
+
+                <!-- Modal content -->
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        {{ render_form(reserve_seat_form, action=url_for('home.reserve', seat_id=seat.id)) }}
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button @click="open = false" type="button"
+                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endmacro %}
+

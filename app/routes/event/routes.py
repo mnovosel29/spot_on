@@ -1,15 +1,23 @@
-import flask_login
 from flask_babel import gettext
 
 from app.extensions import db
 from app.models.event_image import EventImage
 from app.routes.event import bp
-from app.routes.event.forms import EventCreateForm, EventUpdateForm, EventImageForm, EventImageDeleteForm
+from app.routes.event.forms import (
+    EventCreateForm,
+    EventUpdateForm,
+    EventImageForm,
+    EventImageDeleteForm,
+    EventDeleteForm,
+    EventCreateSeatsForm
+)
+
 from app.services import ImageService
 from flask import jsonify, request, render_template, flash, redirect, url_for
 from flask_security import roles_required
 
 from app.models.event import Event
+from app.models.seat import Seat
 
 
 @bp.route('/get_events', methods=['POST', 'GET'])
@@ -67,10 +75,12 @@ def detail(event_id):
     event_update_form = EventUpdateForm(obj=event)
     event_image_form = EventImageForm()
     event_image_delete_form = EventImageDeleteForm()
+    event_delete_form = EventDeleteForm()
     return render_template('admin/events/detail.html',
                            event_update_form=event_update_form,
                            event_image_form=event_image_form,
                            event_image_delete_form=event_image_delete_form,
+                           event_delete_form=event_delete_form,
                            event=event)
 
 
@@ -128,3 +138,47 @@ def delete(event_id):
     db.session.commit()
     flash(gettext('Event deleted successfully.'), 'success')
     return redirect(url_for('event.index'))
+
+
+@bp.route('/<int:event_id>/seats', methods=['GET', 'POST'])
+@roles_required('Admin')
+def seats(event_id):
+    event = Event.query.get(event_id)
+    event_create_seats_form = EventCreateSeatsForm()
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+               'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    render_seats = False
+    x_axis = []
+    y_axis = []
+    seats = Seat.query.filter_by(event_id=event_id).order_by(Seat.id).all()
+
+    if seats:
+        render_seats = True
+        x_axis = sorted(list(set([seat.x_axis for seat in seats])))
+        y_axis = sorted(list(set([seat.y_axis for seat in seats])))
+        for seat in seats:
+            if seat.x_axis == 'A' and seat.y_axis == '1':
+                seat.status = 'my_position'
+                break
+
+    if event_create_seats_form.validate_on_submit():
+        x_axis = letters[:event_create_seats_form.number_of_columns.data]
+        y_axis = [str(i) for i in range(1, event_create_seats_form.number_of_rows.data + 1)]
+        for y in y_axis:
+            for x in x_axis:
+                seat = Seat()
+                seat.x_axis = x
+                seat.y_axis = y
+                seat.event_id = event_id
+                db.session.add(seat)
+                db.session.commit()
+        flash(gettext('Seats created successfully.'), 'success')
+
+    return render_template('admin/events/seats.html',
+                           event=event,
+                           event_create_seats_form=event_create_seats_form,
+                           render_seats=render_seats,
+                           x_axis=x_axis,
+                           y_axis=y_axis,
+                           seats=seats
+                           )

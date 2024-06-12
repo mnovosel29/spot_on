@@ -18,10 +18,11 @@ class ImageService:
         filename = secure_filename(image.filename)
         image_path = os.path.join('app/static/temp', filename)
         image.save(image_path)
-        image = Image.open(image_path)
+
         if max_image_resolution != (0, 0):
+            image = Image.open(image_path)
             image.thumbnail(max_image_resolution)
-        image.save(image_path)
+            image.save(image_path)
 
         flash('test2', 'success')
 

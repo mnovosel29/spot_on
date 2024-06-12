@@ -1,3 +1,5 @@
+{% from 'components/seat/_render_public_seats.html' import render_seats %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +62,8 @@
                                 {% endif %}
 
                             </a>
-                            <ul x-show="dropdownOpen" class="absolute bg-gray-900 bg-opacity-75 text-white mt-2 py-2"
+                            <ul x-show="dropdownOpen"
+                                class="absolute bg-gray-900 bg-opacity-75 text-white mt-2 py-2"
                                 x-cloak>
                                 <li><a href="{{ url_for('auth.profile') }}"
                                        class="block px-4 py-2 hover:bg-gray-900 hover:bg-opacity-90">{{ _('Profile') }}</a>
@@ -117,42 +120,8 @@
                 </h1>
                 <div class="w-full flex justify-evenly flex-col align-items-center md:flex-row ">
                     <div class="w-full justify-center p-2 mb-4 md:rounded md:shadow-lg md:border-r md:border-gray-200 md:mr-4 bg-amber-50">
-                        <h1 class="text font-bold text-white text-center bg-amber-950 rounded mb-2 p-1 w-full">
-                            {{ _('Stage') }}
-                        </h1>
-                        <table class="w-full overflow-auto">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                {% for x in range(20) %}
-                                    <th class="text-center text-gray-900 font-bold mb-1">{{ x + 1 }}</th>
-                                {% endfor %}
-                            </tr>
-                            {% for y in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'] %}
-                                <tr>
-                                    <td class="text-center mr-4 text-gray-900 font-bold">{{ y }}</td>
-                                    {% for x in range(20) %}
-                                        <td @click="show_position = true; x_position = {{ x + 1 }}; y_position = '{{ y }}'"
-                                            class="text-center text-xs cursor-pointer">
-                                            {% if x % 2 == 0 %}
-                                                <div class="p-1 rounded-full">
-                                                    <i class="fa-solid fa-star text-green-400"></i>
-                                                </div>
-                                            {% elif x % 5 == 0 %}
-                                                <div class="p-1">
-                                                    <i class="fa-regular fa-star text-yellow-300"></i>
-                                                </div>
-                                            {% else %}
-                                                <div class="p-1 rounded-full">
-                                                    <i class="fa-regular fa-circle-xmark text-gray-400"></i>
-                                                </div>
-                                            {% endif %}
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                            </thead>
-                        </table>
+
+                        {{ render_seats(seats, reserve_seat_form) }}
 
                     </div>
                     <div class="w-full border-t border-gray-200 bg-amber-50 md:rounded md:shadow-lg h-fit md:border-0">

@@ -1,0 +1,62 @@
+{% import 'components/form/_macros.html' as render_form %}
+
+{% macro render_icon(status) %}
+    {% if status == 'available' %}
+        <i class="fa-regular fa-star text-yellow-300"></i>
+    {% elif status == 'not_available' %}
+        <i class="fa-regular fa-circle-xmark text-gray-400"></i>
+    {% elif status == 'occupied' %}
+        <i class="fa-solid fa-star text-green-400"></i>
+    {% elif status == 'my_position' %}
+        <i class="fa-solid fa-star text-red-600 "></i>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_seats(seats, seat_make_not_available_form) %}
+    <div class="">
+        <h1 class="text font-bold text-white text-center bg-amber-950 rounded mb-2 p-1 w-full">
+            {{ _('Stage') }}
+        </h1>
+        <table class="w-full p-2">
+            <thead>
+            <tr>
+                <th></th>
+                {% set ns = namespace(unique_x_axis=[]) %}
+                {% for seat in seats %}
+                    {% if seat.x_axis not in ns.unique_x_axis %}
+                        <th>{{ seat.x_axis }}</th>
+                        {% set _ = ns.unique_x_axis.append(seat.x_axis) %}
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% set ns = namespace(last_row=None) %}
+            {% for seat in seats %}
+                {% if loop.first or ns.last_row != seat.y_axis %}
+                    {% if not loop.first %}
+                        </tr>
+                    {% endif %}
+                    <tr>
+                    <td>{{ seat.y_axis }}</td>
+                {% endif %}
+            <td>
+                <div class="p-1">
+                    <form method="POST" action="{{ url_for('seat.change_status', seat_id=seat.id) }}">
+                        <button type="submit">
+                            {{ render_icon(seat.status) }}
+                        </button>
+                    </form>
+                </div>
+            </td>
+
+            {% if loop.last %}
+                </tr>
+            {% endif %}
+                {% set ns.last_row = seat.y_axis %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endmacro %}
