@@ -9,13 +9,13 @@
         <div class="grid w-full grid-cols-1 md:grid-cols-2 md:max-w-4xl">
             <div class="mt-4">
                 <strong> {{ _('Seats') }}</strong>
-                <p class="text-sm">{{ _('Here you can generate new stage') }}</p>
+                <p class="text-sm">{{ _('Here you can generate new stage!!!') }}</p>
             </div>
             <div class="mt-4">
-                {% if not render_seats %}
-                    {{ render_form(event_create_seats_form) }}
-                {% else %}
+                {% if show_seats %}
                     {{ render_seats(seats) }}
+                {% else %}
+                    {{ render_form(event_create_seats_form) }}
                 {% endif %}
             </div>
         </div>

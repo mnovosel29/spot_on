@@ -147,19 +147,15 @@ def seats(event_id):
     event_create_seats_form = EventCreateSeatsForm()
     letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
                'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-    render_seats = False
+    show_seats = False
     x_axis = []
     y_axis = []
     seats = Seat.query.filter_by(event_id=event_id).order_by(Seat.id).all()
 
     if seats:
-        render_seats = True
+        show_seats = True
         x_axis = sorted(list(set([seat.x_axis for seat in seats])))
         y_axis = sorted(list(set([seat.y_axis for seat in seats])))
-        for seat in seats:
-            if seat.x_axis == 'A' and seat.y_axis == '1':
-                seat.status = 'my_position'
-                break
 
     if event_create_seats_form.validate_on_submit():
         x_axis = letters[:event_create_seats_form.number_of_columns.data]
@@ -177,7 +173,7 @@ def seats(event_id):
     return render_template('admin/events/seats.html',
                            event=event,
                            event_create_seats_form=event_create_seats_form,
-                           render_seats=render_seats,
+                           show_seats=show_seats,
                            x_axis=x_axis,
                            y_axis=y_axis,
                            seats=seats
