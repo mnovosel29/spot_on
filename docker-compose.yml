@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: DockerFile
+    volumes:
+      - .:/app
+    ports:
+      - 5023:5023
+    command: flask run --host=0.0.0.0 --port=5023
+    depends_on:
+      - db
+  npm:
+    build:
+      context: .
+      dockerfile: DockerFile.npm
+    volumes:
+      - .:/app
+    command: npm install
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresAdmin#13
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+volumes:
+  postgres_data:
