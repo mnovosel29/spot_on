@@ -5,8 +5,11 @@ from flask_babel import format_datetime
 
 from app.routes.auth.forms import ExtendedRegisterForm
 from config import Config
-from app.extensions import db
-from app.extensions import babel
+from app.extensions import (
+    db,
+    babel,
+    mail
+)
 from flask_migrate import Migrate
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_mail import Mail
@@ -37,7 +40,7 @@ def create_app(config_class=Config):
     migrate = Migrate(app, db)
     babel.init_app(app, default_locale=os.environ.get('DEFAULT_LANGUAGE'))
     toolbar = DebugToolbarExtension(app)
-    mail = Mail(app)
+    mail.init_app(app)
 
     user_datastore = SQLAlchemySessionUserDatastore(db.session, User, Role)
     security = Security(app, user_datastore, confirm_register_form=ExtendedRegisterForm)
