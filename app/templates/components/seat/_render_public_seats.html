@@ -81,16 +81,16 @@
                             {% else %}
                                 <p class="text-center text-red-500 mb-6">{{ _('You must login to reserve seat.') }}</p>
                             {% endif %}
-                        {% elif current_user.id == seat.reservation.user_id %}
+                        {% elif seat.status == 'not_available' %}
+                            <div class="w-full text-red-700 px-4 py-3">
+                                <p class="font-bold py-2">{{ _('Not available') }}</p>
+                            </div>
+                        {% elif current_user.is_authenticated and current_user.id == seat.reservation.user_id %}
                             <div class="px-4 py-3">
                                 <p class="font-bold py-2">{{ _('Reserved by') }}</p>
                                 <p class="text-sm">{{ _('Partner 1: ') }} {{ seat.reservation.partner_1 }}</p>
                                 <p class="text-sm">{{ _('Partner 2: ') }} {{ seat.reservation.partner_2 }}</p>
                                 {{ render_form(remove_reservation_form, action=url_for('home.remove_reservation', seat_id=seat.id)) }}
-                            </div>
-                        {% elif seat.status == 'not_available' %}
-                            <div class="w-full text-red-700 px-4 py-3">
-                                <p class="font-bold py-2">{{ _('Not available') }}</p>
                             </div>
                         {% else %}
                             <div class="w-full text-blue-700 px-4 py-3">
