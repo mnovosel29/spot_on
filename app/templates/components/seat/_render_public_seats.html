@@ -79,7 +79,7 @@
                             {% if current_user.is_authenticated %}
                                 {{ render_form(reserve_seat_form, action=url_for('home.reserve', seat_id=seat.id)) }}
                             {% else %}
-                                <p class="text-center text-red-500">{{ _('You must login to reserve seat.') }}</p>
+                                <p class="text-center text-red-500 mb-6">{{ _('You must login to reserve seat.') }}</p>
                             {% endif %}
                         {% elif current_user.id == seat.reservation.user_id %}
                             <div class="px-4 py-3">

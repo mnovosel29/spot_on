@@ -63,7 +63,7 @@
                     {% else %}
                         <li>
                             <a href="{{ url_for('security.login') }}"
-                               class="text-gray-100">{{ _('Login') }}</a>
+                               class="text-gray-100 pr-2">{{ _('Login') }}</a>
                         </li>
                         <li>
                             <a href="{{ url_for('security.register') }}"
@@ -77,13 +77,13 @@
 
     <div class="w-full mx-auto lg:max-w-4xl mt-2">
         <div class="flex flex-col w-full justify-center items-center border-b border-gray-300 lg:flex-col lg:justify-evenly mt-20">
-            <h1 class="text-4xl font-bold text-gray-900 text-balance mt-2 mb-4 text-center">
+            <h1 class="text-4xl font-bold text-gray-900 text-balance mb-4 text-center">
                 445. rođendan Grada Karlovca
             </h1>
-            <img class="w-full rounded-xl"
-                 src="{{ url_for('static', filename='image.py/posts/bal.jpg') }}" alt="Hero Image">
+            <img class="w-full rounded-none md:rounded-lg"
+                 src="{{ url_for('static', filename='images/posts/bal.jpg') }}" alt="Hero Image">
             <div class="py-4 px-2">
-                <p class="text text-gray-700">
+                <p class="text-lg text-gray-700">
                     Karlovac je jedan od rijetkih gradova koji točno zna datum svog postanka, svog „rođenja“, 13. 7. 1579.  Svake godine na taj dan održava se Rođendanski bal na kojem gradu u čast valcer zapleše onoliko plesnih parova koliko grad ima godina. Ove godine će na taktove bečkog i engleskog valcera  plesati 445 plesnih parova.
                 </p>
                 <p class="text-lg font-bold text-gray-700 my-4">

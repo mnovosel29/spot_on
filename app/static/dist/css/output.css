@@ -1258,6 +1258,10 @@ input:checked + .toggle-bg {
   margin-right: -0.75rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1654,6 +1658,10 @@ input:checked + .toggle-bg {
 
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-none {
+  border-radius: 0px;
 }
 
 .rounded-b-lg {
@@ -2061,6 +2069,10 @@ input:checked + .toggle-bg {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pr-2 {
+  padding-right: 0.5rem;
 }
 
 .text-left {
@@ -2780,6 +2792,10 @@ input:checked + .toggle-bg {
 
   .md\:rounded {
     border-radius: 0.25rem;
+  }
+
+  .md\:rounded-lg {
+    border-radius: 0.5rem;
   }
 
   .md\:border-0 {

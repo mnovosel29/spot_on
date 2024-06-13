@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-01 12:44+0200\n"
-"PO-Revision-Date: 2024-06-01 12:44+0200\n"
+"POT-Creation-Date: 2024-06-13 03:12+0200\n"
+"PO-Revision-Date: 2024-06-13 03:12+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hr\n"
 "Language-Team: hr <LL@li.org>\n"
@@ -31,191 +31,391 @@ msgstr "Da"
 msgid "No"
 msgstr "Ne"
 
-#: app/routes/auth/forms.py:11 app/routes/auth/forms.py:46
-#: app/routes/users/forms.py:10 app/routes/users/forms.py:34
+#: app/routes/auth/forms.py:12 app/routes/auth/forms.py:47
+#: app/routes/users/forms.py:11 app/routes/users/forms.py:35
 msgid "First name"
 msgstr "Ime"
 
-#: app/routes/auth/forms.py:12 app/routes/auth/forms.py:16
-#: app/routes/auth/forms.py:20 app/routes/auth/forms.py:25
-#: app/routes/auth/forms.py:28 app/routes/auth/forms.py:36
-#: app/routes/auth/forms.py:40 app/routes/auth/forms.py:47
-#: app/routes/auth/forms.py:51 app/routes/auth/forms.py:59
-#: app/routes/auth/forms.py:68 app/routes/auth/forms.py:71
-#: app/routes/auth/forms.py:74 app/routes/auth/forms.py:82
-#: app/routes/users/forms.py:11 app/routes/users/forms.py:15
-#: app/routes/users/forms.py:19 app/routes/users/forms.py:24
-#: app/routes/users/forms.py:27 app/routes/users/forms.py:35
-#: app/routes/users/forms.py:39 app/routes/users/forms.py:47
-#: app/routes/users/forms.py:55 app/routes/users/forms.py:59
+#: app/routes/auth/forms.py:13 app/routes/auth/forms.py:17
+#: app/routes/auth/forms.py:21 app/routes/auth/forms.py:26
+#: app/routes/auth/forms.py:29 app/routes/auth/forms.py:37
+#: app/routes/auth/forms.py:41 app/routes/auth/forms.py:48
+#: app/routes/auth/forms.py:52 app/routes/auth/forms.py:60
+#: app/routes/auth/forms.py:69 app/routes/auth/forms.py:72
+#: app/routes/auth/forms.py:75 app/routes/auth/forms.py:83
+#: app/routes/event/forms.py:11 app/routes/event/forms.py:16
+#: app/routes/event/forms.py:30 app/routes/event/forms.py:35
+#: app/routes/event/forms.py:51 app/routes/event/forms.py:54
+#: app/routes/users/forms.py:12 app/routes/users/forms.py:16
+#: app/routes/users/forms.py:20 app/routes/users/forms.py:25
+#: app/routes/users/forms.py:28 app/routes/users/forms.py:36
+#: app/routes/users/forms.py:40 app/routes/users/forms.py:48
+#: app/routes/users/forms.py:56 app/routes/users/forms.py:60
 msgid "This field is required."
 msgstr "Ovo polje je obavezno."
 
-#: app/routes/auth/forms.py:13 app/routes/auth/forms.py:48
+#: app/routes/auth/forms.py:14 app/routes/auth/forms.py:49
 msgid "First name must be between 2 and 100 characters."
 msgstr "Ime mora biti između 2 i 100 znakova."
 
-#: app/routes/auth/forms.py:15 app/routes/auth/forms.py:50
-#: app/routes/users/forms.py:14 app/routes/users/forms.py:38
+#: app/routes/auth/forms.py:16 app/routes/auth/forms.py:51
+#: app/routes/users/forms.py:15 app/routes/users/forms.py:39
 msgid "Last name"
 msgstr "Prezime"
 
-#: app/routes/auth/forms.py:17 app/routes/auth/forms.py:52
+#: app/routes/auth/forms.py:18 app/routes/auth/forms.py:53
 msgid "Last name must be between 2 and 100 characters."
 msgstr "Prezime mora biti između 2 i 100 znakova."
 
-#: app/routes/auth/forms.py:19 app/routes/auth/forms.py:35
-#: app/routes/auth/forms.py:58 app/routes/auth/forms.py:81
-#: app/routes/users/forms.py:18 app/routes/users/forms.py:46
-#: app/templates/admin/users/detail.html:24 app/templates/auth/profile.html:19
+#: app/routes/auth/forms.py:20 app/routes/auth/forms.py:36
+#: app/routes/auth/forms.py:59 app/routes/auth/forms.py:82
+#: app/routes/users/forms.py:19 app/routes/users/forms.py:47
+#: app/templates/admin/users/detail.html:43 app/templates/auth/profile.html:33
 msgid "Email"
 msgstr "Email"
 
-#: app/routes/auth/forms.py:21 app/routes/auth/forms.py:37
-#: app/routes/auth/forms.py:60 app/routes/auth/forms.py:83
-#: app/routes/users/forms.py:20 app/routes/users/forms.py:48
+#: app/routes/auth/forms.py:22 app/routes/auth/forms.py:38
+#: app/routes/auth/forms.py:61 app/routes/auth/forms.py:84
+#: app/routes/users/forms.py:21 app/routes/users/forms.py:49
 msgid "Please enter a valid email address."
 msgstr "Molimo unesite ispravnu email adresu."
 
-#: app/routes/auth/forms.py:22 app/routes/auth/forms.py:61
-#: app/routes/users/forms.py:21
+#: app/routes/auth/forms.py:23 app/routes/auth/forms.py:62
+#: app/routes/users/forms.py:22
 msgid "This email is already in use."
-msgstr "Ova email adresa je već u upotrebi."
+msgstr "Ovaj email je već u upotrebi."
 
-#: app/routes/auth/forms.py:24 app/routes/auth/forms.py:39
-#: app/routes/auth/forms.py:70 app/routes/users/forms.py:23
-#: app/routes/users/forms.py:54 app/templates/auth/profile.html:28
+#: app/routes/auth/forms.py:25 app/routes/auth/forms.py:40
+#: app/routes/auth/forms.py:71 app/routes/users/forms.py:24
+#: app/routes/users/forms.py:55 app/templates/auth/profile.html:43
 msgid "Password"
 msgstr "Lozinka"
 
-#: app/routes/auth/forms.py:27 app/routes/auth/forms.py:73
-#: app/routes/users/forms.py:26 app/routes/users/forms.py:58
+#: app/routes/auth/forms.py:28 app/routes/auth/forms.py:74
+#: app/routes/users/forms.py:27 app/routes/users/forms.py:59
 msgid "Confirm Password"
 msgstr "Potvrdi lozinku"
 
-#: app/routes/auth/forms.py:29 app/routes/auth/forms.py:75
-#: app/routes/users/forms.py:28 app/routes/users/forms.py:60
+#: app/routes/auth/forms.py:30 app/routes/auth/forms.py:76
+#: app/routes/users/forms.py:29 app/routes/users/forms.py:61
 msgid "Passwords must match."
 msgstr "Lozinke se moraju podudarati."
 
-#: app/routes/auth/forms.py:31 app/templates/security/register_user.html:9
+#: app/routes/auth/forms.py:32 app/templates/home/index.html:70
+#: app/templates/layout/navbar.html:56
+#: app/templates/security/register_user.html:9
 msgid "Sign Up"
 msgstr "Registriraj se"
 
-#: app/routes/auth/forms.py:42 app/templates/layout/admin_header.html:13
-#: app/templates/security/login_user.html:8
+#: app/routes/auth/forms.py:43 app/templates/home/index.html:66
+#: app/templates/layout/admin_header.html:19
+#: app/templates/layout/navbar.html:52 app/templates/security/login_user.html:9
 msgid "Login"
 msgstr "Prijava"
 
-#: app/routes/auth/forms.py:54 app/routes/auth/forms.py:63
-#: app/routes/auth/forms.py:77
+#: app/routes/auth/forms.py:55 app/routes/auth/forms.py:64
+#: app/routes/auth/forms.py:78
 msgid "Update"
 msgstr "Ažuriraj"
 
-#: app/routes/auth/forms.py:67
+#: app/routes/auth/forms.py:68
 msgid "Current Password"
 msgstr "Trenutna lozinka"
 
-#: app/routes/auth/forms.py:85
+#: app/routes/auth/forms.py:86
 msgid "Reset Password"
 msgstr "Resetiraj lozinku"
 
-#: app/routes/auth/routes.py:43
+#: app/routes/auth/forms.py:90 app/routes/users/forms.py:67
+msgid "Avatar"
+msgstr "Avatar"
+
+#: app/routes/auth/forms.py:91 app/routes/event/forms.py:23
+#: app/routes/users/forms.py:68
+msgid "Images only"
+msgstr "Samo slike"
+
+#: app/routes/auth/forms.py:93 app/routes/users/forms.py:70
+msgid "Update avatar"
+msgstr "Ažuriraj avatar"
+
+#: app/routes/auth/forms.py:97 app/routes/users/forms.py:74
+msgid "Delete avatar"
+msgstr "Izbriši avatar"
+
+#: app/routes/auth/routes.py:55
 msgid "Profile updated successfully"
 msgstr "Profil uspješno ažuriran"
 
-#: app/routes/auth/routes.py:69 app/routes/users/routes.py:111
+#: app/routes/auth/routes.py:84 app/routes/users/routes.py:126
 msgid "Email updated successfully."
 msgstr "Email uspješno ažuriran."
 
-#: app/routes/auth/routes.py:91
+#: app/routes/auth/routes.py:110
 msgid "Incorrect current password"
-msgstr "Netočna trenutna lozinka"
+msgstr ""
 
-#: app/routes/auth/routes.py:95 app/routes/users/routes.py:128
+#: app/routes/auth/routes.py:114 app/routes/users/routes.py:143
 msgid "Password updated successfully."
 msgstr "Lozinka uspješno ažurirana."
 
-#: app/routes/users/forms.py:12 app/routes/users/forms.py:16
-#: app/routes/users/forms.py:36 app/routes/users/forms.py:40
-msgid "Name must be between 2 and 100 characters."
-msgstr "Ime mora biti između 2 i 100 znakova."
+#: app/routes/auth/routes.py:161 app/routes/users/routes.py:198
+msgid "Avatar updated successfully."
+msgstr "Avatar uspješno ažuriran."
 
-#: app/routes/users/forms.py:30
+#: app/routes/auth/routes.py:191 app/routes/users/routes.py:160
+msgid "Avatar deleted successfully."
+msgstr "Avatar uspješno izbrisan."
+
+#: app/routes/auth/routes.py:193 app/routes/users/routes.py:162
+msgid "No avatar to delete."
+msgstr "Nema avatara za brisanje."
+
+#: app/routes/event/forms.py:10 app/routes/event/forms.py:29
+msgid "Title"
+msgstr "Naziv"
+
+#: app/routes/event/forms.py:12 app/routes/event/forms.py:31
+msgid "Name must be between 3 and 254 characters."
+msgstr "Ime mora biti između 3 i 254 znakova."
+
+#: app/routes/event/forms.py:14 app/routes/event/forms.py:33
+msgid "Description"
+msgstr "Opis"
+
+#: app/routes/event/forms.py:15 app/routes/event/forms.py:34
+msgid "Starts at"
+msgstr "Počinje u"
+
+#: app/routes/event/forms.py:18
+msgid "Add event"
+msgstr "Dodaj događaj"
+
+#: app/routes/event/forms.py:22
+msgid "Upload image"
+msgstr ""
+
+#: app/routes/event/forms.py:25
+msgid "Update image"
+msgstr "Ažuriraj sliku"
+
+#: app/routes/event/forms.py:37
+msgid "Update event"
+msgstr "Ažuriraj događaj"
+
+#: app/routes/event/forms.py:41 app/routes/event/forms.py:45
+#: app/templates/components/form/_confirmation.html:5
+msgid "Delete"
+msgstr "Izbriši"
+
+#: app/routes/event/forms.py:50
+msgid "Number of columns"
+msgstr "Broj stupaca"
+
+#: app/routes/event/forms.py:53
+msgid "Number of rows"
+msgstr "Broj redaka"
+
+#: app/routes/event/forms.py:56 app/templates/admin/events/detail.html:70
+msgid "Add seats"
+msgstr "Dodaj pozicije"
+
+#: app/routes/event/forms.py:60 app/routes/seat/forms.py:10
+msgid "Make not available"
+msgstr "Učini nedostupnim"
+
+#: app/routes/event/routes.py:66
+msgid "Event created successfully."
+msgstr "Događaj uspješno kreiran."
+
+#: app/routes/event/routes.py:97
+msgid "Event updated successfully."
+msgstr "Događaj uspješno ažuriran."
+
+#: app/routes/event/routes.py:116
+msgid "Image added successfully."
+msgstr "Slika uspješno dodana."
+
+#: app/routes/event/routes.py:129
+msgid "Image deleted successfully."
+msgstr "Slika uspješno izbrisana."
+
+#: app/routes/event/routes.py:139
+msgid "Event deleted successfully."
+msgstr "Događaj uspješno izbrisan."
+
+#: app/routes/event/routes.py:171
+msgid "Seats created successfully."
+msgstr "Pozicije uspješno kreirane."
+
+#: app/routes/home/forms.py:10
+msgid "Partner 1"
+msgstr "Partner 1"
+
+#: app/routes/home/forms.py:11
+msgid "Partner 2"
+msgstr "Partner 2"
+
+#: app/routes/home/forms.py:12
+msgid "Reserve"
+msgstr "Rezerviraj"
+
+#: app/routes/home/forms.py:16
+msgid "Remove reservation"
+msgstr "Ukloni rezervaciju"
+
+#: app/routes/seat/forms.py:14
+msgid "Make available"
+msgstr "Učini dostupnim"
+
+#: app/routes/seat/routes.py:19
+msgid "Seat status is invalid"
+msgstr "Status pozicije je nevažeći."
+
+#: app/routes/seat/routes.py:23
+msgid "Seat status updated"
+msgstr "Status pozicije ažuriran"
+
+#: app/routes/users/forms.py:13 app/routes/users/forms.py:17
+#: app/routes/users/forms.py:37 app/routes/users/forms.py:41
+msgid "Name must be between 2 and 100 characters."
+msgstr "Ime mora sadržavati između 2 i 100 znakova."
+
+#: app/routes/users/forms.py:31
 msgid "Add User"
 msgstr "Dodaj korisnika"
 
-#: app/routes/users/forms.py:42
+#: app/routes/users/forms.py:43
 msgid "Update user"
 msgstr "Ažuriraj korisnika"
 
-#: app/routes/users/forms.py:50
+#: app/routes/users/forms.py:51
 msgid "Update email"
 msgstr "Ažuriraj email"
 
-#: app/routes/users/forms.py:56
+#: app/routes/users/forms.py:57
 msgid "Password must be have at least 8 characters."
-msgstr "Lozinka mora imati najmanje 8 znakova."
+msgstr "Lozinka mora sadržavati najmanje 8 znakova."
 
-#: app/routes/users/forms.py:62
+#: app/routes/users/forms.py:63
 msgid "Update password"
 msgstr "Ažuriraj lozinku"
 
-#: app/routes/users/forms.py:66
+#: app/routes/users/forms.py:78
 msgid "Roles"
 msgstr "Uloge"
 
-#: app/routes/users/forms.py:67
+#: app/routes/users/forms.py:79
 msgid "Update roles"
 msgstr "Ažuriraj uloge"
 
-#: app/routes/users/forms.py:71
+#: app/routes/users/forms.py:83
 msgid "Activate user"
 msgstr "Aktiviraj korisnika"
 
-#: app/routes/users/forms.py:75
+#: app/routes/users/forms.py:87
 msgid "Deactivate user"
 msgstr "Deaktiviraj korisnika"
 
-#: app/routes/users/forms.py:79
+#: app/routes/users/forms.py:91
 msgid "Confirm user"
 msgstr "Potvrdi korisnika"
 
-#: app/routes/users/forms.py:83 app/templates/admin/users/detail.html:104
+#: app/routes/users/forms.py:95 app/templates/admin/users/detail.html:123
 msgid "Delete user"
 msgstr "Izbriši korisnika"
 
-#: app/routes/users/routes.py:68
+#: app/routes/users/routes.py:78
 msgid "User created successfully."
 msgstr "Korisnik uspješno kreiran."
 
-#: app/routes/users/routes.py:91
+#: app/routes/users/routes.py:106
 msgid "User information updated successfully."
 msgstr "Korisničke informacije uspješno ažurirane."
 
-#: app/routes/users/routes.py:147
+#: app/routes/users/routes.py:219
 msgid "Roles updated successfully."
 msgstr "Uloge uspješno ažurirane."
 
-#: app/routes/users/routes.py:164
+#: app/routes/users/routes.py:236
 msgid "User activated successfully."
 msgstr "Korisnik uspješno aktiviran."
 
-#: app/routes/users/routes.py:181
+#: app/routes/users/routes.py:253
 msgid "User deactivated successfully."
 msgstr "Korisnik uspješno deaktiviran."
 
-#: app/routes/users/routes.py:198
+#: app/routes/users/routes.py:270
 msgid "User confirmed successfully."
 msgstr "Korisnik uspješno potvrđen."
 
-#: app/routes/users/routes.py:214
+#: app/routes/users/routes.py:286
 msgid "User deleted successfully."
 msgstr "Korisnik uspješno izbrisan."
 
+#: app/templates/admin/events/create.html:10
 #: app/templates/admin/users/create.html:10
 msgid "Create user"
-msgstr "Dodaj korisnika"
+msgstr "Kreiraj korisnika"
+
+#: app/templates/admin/events/create.html:11
+msgid "Here you can create new event"
+msgstr "Ovdje možete kreirati novi događaj"
+
+#: app/templates/admin/events/detail.html:13
+msgid "Event information"
+msgstr "Informacije o događaju"
+
+#: app/templates/admin/events/detail.html:14
+msgid "Here you can update event info"
+msgstr "Ovdje možete ažurirati informacije o događaju"
+
+#: app/templates/admin/events/detail.html:25
+msgid "Event image"
+msgstr "Slika događaja"
+
+#: app/templates/admin/events/detail.html:26
+msgid "Here you can update or change event"
+msgstr "Ovdje možete ažurirati ili promijeniti sliku događaja"
+
+#: app/templates/admin/events/detail.html:37
+msgid "Event images"
+msgstr "Slike događaja"
+
+#: app/templates/admin/events/detail.html:38
+msgid "Here you can view images"
+msgstr "Ovdje možete pregledati slike"
+
+#: app/templates/admin/events/detail.html:64
+#: app/templates/components/seat/_render_public_seats.html:18
+#: app/templates/components/seat/_render_seats.html:18
+msgid "Stage"
+msgstr "Pozornica"
+
+#: app/templates/admin/events/detail.html:65
+msgid "Here you can add or update stage"
+msgstr "Ovdje možete dodati ili ažurirati pozornicu"
+
+#: app/templates/admin/events/detail.html:79
+msgid "Delete event"
+msgstr "Izbriši događaj"
+
+#: app/templates/admin/events/detail.html:80
+msgid "Here you can delete images"
+msgstr "Ovdje možete izbrisati slike"
+
+#: app/templates/admin/events/index.html:28
+#: app/templates/layout/admin_side_nav.html:41
+msgid "Events"
+msgstr "Događaji"
+
+#: app/templates/admin/events/seats.html:11
+msgid "Seats"
+msgstr "Pozicije"
+
+#: app/templates/admin/events/seats.html:12
+msgid "Here you can generate new stage!!!"
+msgstr "Ovdje možete generirati novu pozornicu!!!"
 
 #: app/templates/admin/users/create.html:11
 msgid "Here you can create new user"
@@ -229,72 +429,77 @@ msgstr "Korisničke informacije"
 msgid "Here you can update user info"
 msgstr "Ovdje možete ažurirati korisničke informacije"
 
-#: app/templates/admin/users/detail.html:25
+#: app/templates/admin/users/detail.html:24 app/templates/auth/profile.html:53
+msgid "User Avatar"
+msgstr "Avatar korisnika"
+
+#: app/templates/admin/users/detail.html:25 app/templates/auth/profile.html:54
+msgid "Here you can update or change user avatar"
+msgstr "Ovdje možete ažurirati ili promijeniti avatar korisnika"
+
+#: app/templates/admin/users/detail.html:44
 msgid "Here you can update user email"
-msgstr "Ovdje možete ažurirati korisnički email"
+msgstr "Ovdje možete ažurirati email korisnika"
 
-#: app/templates/admin/users/detail.html:36
+#: app/templates/admin/users/detail.html:55
 msgid "User password"
-msgstr "Korisnička lozinka"
+msgstr "Lozinka korisnika"
 
-#: app/templates/admin/users/detail.html:37
-#: app/templates/admin/users/detail.html:61
+#: app/templates/admin/users/detail.html:56
+#: app/templates/admin/users/detail.html:80
 msgid "Here you can update user password"
-msgstr "Ovdje možete ažurirati korisničku lozinku"
+msgstr "Ovdje možete ažurirati lozinku korisnika"
 
-#: app/templates/admin/users/detail.html:48
+#: app/templates/admin/users/detail.html:67
 msgid "User Roles"
 msgstr "Korisničke uloge"
 
-#: app/templates/admin/users/detail.html:49
+#: app/templates/admin/users/detail.html:68
 msgid "Here you can see user roles"
 msgstr "Ovdje možete vidjeti korisničke uloge"
 
-#: app/templates/admin/users/detail.html:60
-#: app/templates/admin/users/detail.html:68
+#: app/templates/admin/users/detail.html:79
+#: app/templates/admin/users/detail.html:87
 msgid "Active"
 msgstr "Aktivan"
 
-#: app/templates/admin/users/detail.html:70
+#: app/templates/admin/users/detail.html:89
 msgid "Inactive"
 msgstr "Neaktivan"
 
-#: app/templates/admin/users/detail.html:82
+#: app/templates/admin/users/detail.html:101
 msgid "Confirmed At"
 msgstr "Potvrđen u"
 
-#: app/templates/admin/users/detail.html:86
+#: app/templates/admin/users/detail.html:105
 msgid "Not confirmed"
 msgstr "Nije potvrđen"
 
-#: app/templates/admin/users/detail.html:105
+#: app/templates/admin/users/detail.html:124
 msgid "Here you can delete user"
 msgstr "Ovdje možete izbrisati korisnika"
 
 #: app/templates/admin/users/index.html:28
 #: app/templates/layout/admin_side_nav.html:27
+#: app/templates/layout/navbar.html:20
 msgid "Users"
 msgstr "Korisnici"
 
-#: app/templates/auth/profile.html:10
+#: app/templates/auth/profile.html:23
 msgid "Profile information"
 msgstr "Informacije o profilu"
 
-#: app/templates/auth/profile.html:11
+#: app/templates/auth/profile.html:24
 msgid "Update your First and Last name"
-msgstr "Ovdje možete ažurirati vaše ime i prezime"
+msgstr "Ažurirajte vaše ime i prezime"
 
-#: app/templates/auth/profile.html:20
+#: app/templates/auth/profile.html:34
 msgid "Update your E-mail"
-msgstr "Ažurirajte vašu email adresu"
+msgstr "Ažurirajte vaš E-mail"
 
-#: app/templates/auth/profile.html:29
+#: app/templates/auth/profile.html:44
 msgid "Update your password"
 msgstr "Ažurirajte vašu lozinku"
-
-#: app/templates/components/form/_confirmation.html:5
-msgid "Delete"
-msgstr "Izbriši"
 
 #: app/templates/components/form/_confirmation.html:20
 msgid "This action will delete record!"
@@ -308,15 +513,79 @@ msgstr "Jeste li sigurni?"
 msgid "Cancel"
 msgstr "Odustani"
 
+#: app/templates/components/image/_show_image.html:5
+msgid "Show image"
+msgstr "Prikaži sliku"
+
+#: app/templates/components/seat/_render_public_seats.html:76
+msgid "Seat"
+msgstr "Pozicija"
+
+#: app/templates/components/seat/_render_public_seats.html:82
+msgid "You must login to reserve seat."
+msgstr "Morate se prijaviti kako bi rezervirali poziciju."
+
+#: app/templates/components/seat/_render_public_seats.html:86
+#: app/templates/components/seat/_render_public_seats.html:93
+msgid "Reserved by"
+msgstr "Rezervirao"
+
+#: app/templates/components/seat/_render_public_seats.html:87
+#: app/templates/components/seat/_render_public_seats.html:94
+msgid "Partner 1: "
+msgstr "Partner 1: "
+
+#: app/templates/components/seat/_render_public_seats.html:88
+#: app/templates/components/seat/_render_public_seats.html:95
+msgid "Partner 2: "
+msgstr "Partner 2: "
+
+#: app/templates/home/index.html:56 app/templates/layout/navbar.html:42
+msgid "Profile"
+msgstr "Profil"
+
+#: app/templates/home/index.html:59 app/templates/layout/admin_header.html:16
+#: app/templates/layout/navbar.html:45
+msgid "Logout"
+msgstr "Odjava"
+
+#: app/templates/home/index.html:97
+msgid "Reserve your place, NOW!!!"
+msgstr "Rezervirajte svoje mjesto, SADA!!!"
+
+#: app/templates/home/index.html:110
+msgid "Legend"
+msgstr "Legenda"
+
+#: app/templates/home/index.html:118
+msgid "My position"
+msgstr "Moja pozicija"
+
+#: app/templates/home/index.html:126
+msgid "Occupied"
+msgstr "Zauzeto"
+
+#: app/templates/home/index.html:134
+msgid "Free"
+msgstr "Slobodno"
+
+#: app/templates/home/index.html:142
+msgid "Not available"
+msgstr "Nedostupno"
+
+#: app/templates/layout/admin_header.html:15
+msgid "Home"
+msgstr "Naslovnica"
+
 #: app/templates/layout/admin_side_nav.html:13
 msgid "Dashboard"
-msgstr "Nadzorna ploča"
+msgstr "Kontrolna ploča"
 
 #: app/templates/security/_macros.html:24
 msgid "Remember me"
 msgstr "Zapamti me"
 
-#: app/templates/security/login_user.html:24
+#: app/templates/security/login_user.html:22
 msgid "Forgot password?"
 msgstr "Zaboravili ste lozinku?"
 
@@ -329,7 +598,7 @@ msgstr "Dobrodošli %(email)s!"
 
 #: app/templates/security/email/reset_instructions.html:70
 msgid "You can reset password through the link below:"
-msgstr "Lozinku možete resetirati putem linka ispod:"
+msgstr "Ovdje možete resetirati lozinku:"
 
 #: app/templates/security/email/reset_instructions.html:73
 msgid "Reset password"
@@ -341,9 +610,8 @@ msgstr "Vaša lozinka je resetirana"
 
 #: app/templates/security/email/welcome.html:69
 msgid "You can confirm your email through the link below:"
-msgstr "Možete potvrditi vaš email putem linka ispod:"
+msgstr "Možete potvrditi vaš email ovdje:"
 
 #: app/templates/security/email/welcome.html:72
 msgid "Confirm my account"
 msgstr "Potvrdi moj račun"
-
