@@ -12,7 +12,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_seats(seats, reserve_seat_form) %}
+{% macro render_seats(seats, reserve_seat_form, remove_reservation_form, current_user) %}
     <div class="">
         <h1 class="text font-bold text-white text-center bg-amber-950 rounded mb-2 p-1 w-full">
             {{ _('Stage') }}
@@ -43,9 +43,7 @@
             <td>
                 <div class="p-1">
 
-                    <p>{{ seat.reserved_by.user_id }}</p>
-
-                    {{ render_modal(seat, reserve_seat_form) }}
+                    {{ render_modal(seat, reserve_seat_form, remove_reservation_form, current_user) }}
 
                 </div>
             </td>
@@ -61,7 +59,7 @@
 
 {% endmacro %}
 
-{% macro render_modal(seat, reserve_seat_form) %}
+{% macro render_modal(seat, reserve_seat_form, remove_reservation_form, current_user) %}
     <div x-data="{ open: false }">
         <!-- Button to open the modal -->
         <button @click="open = true" class="">
@@ -69,23 +67,40 @@
         </button>
 
         <!-- Modal -->
-        <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title"
-             role="dialog" aria-modal="true" x-cloak>
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                     aria-hidden="true"></div>
+        <div x-show="open" x-cloak>
+            <div class="fixed inset-0 bg-gray-800 opacity-60"></div>
+            <div class="fixed top-12 left-0 w-full flex justify-center">
+                <div class="relative w-full flex justify-between p-1 m-6 md:max-w-md md:m-0">
+                    <div class="w-full h-full text-center bg-white rounded-lg">
+                        <h4 class="text-2xl font-bold p-2">
+                            {{ _('Seat') }}: {{ seat.x_axis }}{{ seat.y_axis }}
+                        </h4>
+                        {% if seat.status == 'available' %}
+                            {% if current_user.is_authenticated %}
+                                {{ render_form(reserve_seat_form, action=url_for('home.reserve', seat_id=seat.id)) }}
+                            {% else %}
+                                <p class="text-center text-red-500">{{ _('You must login to reserve seat.') }}</p>
+                            {% endif %}
+                        {% elif current_user.id == seat.reservation.user_id %}
+                            <div class="px-4 py-3">
+                                <p class="font-bold py-2">{{ _('Reserved by') }}</p>
+                                <p class="text-sm">{{ _('Partner 1: ') }} {{ seat.reservation.partner_1 }}</p>
+                                <p class="text-sm">{{ _('Partner 2: ') }} {{ seat.reservation.partner_2 }}</p>
+                                {{ render_form(remove_reservation_form, action=url_for('home.remove_reservation', seat_id=seat.id)) }}
+                            </div>
+                        {% else %}
+                            <div class="w-full text-blue-700 px-4 py-3">
+                                <p class="font-bold py-2">{{ _('Reserved by') }}</p>
+                                <p class="text-sm">{{ _('Partner 1: ') }} {{ seat.reservation.partner_1 }}</p>
+                                <p class="text-sm">{{ _('Partner 2: ') }} {{ seat.reservation.partner_2 }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
 
-                <!-- Modal content -->
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        {{ render_form(reserve_seat_form, action=url_for('home.reserve', seat_id=seat.id)) }}
-                    </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button @click="open = false" type="button"
-                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                            Close
-                        </button>
-                    </div>
+                    <button type="button" x-on:click="open=false"
+                            class="absolute -top-2 -right-2 bg-white rounded-full px-1">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </button>
                 </div>
             </div>
         </div>

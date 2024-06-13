@@ -10,3 +10,7 @@ class ReserveSeatForm(FlaskForm):
     partner_1 = StringField(lazy_gettext('Partner 1'), validators=[DataRequired(), Length(min=2, max=255)])
     partner_2 = StringField(lazy_gettext('Partner 2'), validators=[DataRequired(), Length(min=2, max=255)])
     submit = SubmitField(lazy_gettext('Reserve'))
+
+
+class RemoveReservationForm(FlaskForm):
+    submit = SubmitField(lazy_gettext('Remove reservation'))
