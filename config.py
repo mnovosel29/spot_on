@@ -30,6 +30,7 @@ class Config:
 
     # Flask-Mail configuration
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
     MAIL_PORT = os.environ.get('MAIL_PORT')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
