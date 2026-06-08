@@ -1,11 +1,11 @@
-# Dockerfile.npm
-FROM node:18
+# Builds Tailwind CSS
+FROM node:18-slim
 
 WORKDIR /app
 
-COPY package.json package.json
+COPY package.json package-lock.json* ./
 RUN npm install
 
 COPY . .
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "build"]

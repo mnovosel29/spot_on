@@ -1,23 +1,5 @@
 version: '3.8'
 services:
-  web:
-    build:
-      context: .
-      dockerfile: DockerFile
-    volumes:
-      - .:/app
-    ports:
-      - 5023:5023
-    command: flask run --host=0.0.0.0 --port=5023
-    depends_on:
-      - db
-  npm:
-    build:
-      context: .
-      dockerfile: DockerFile.npm
-    volumes:
-      - .:/app
-    command: npm install
   db:
     image: postgres:16
     environment:
@@ -28,5 +10,37 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  npm:
+    build:
+      context: .
+      dockerfile: DockerFile.npm
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run build
+
+  web:
+    build:
+      context: .
+      dockerfile: DockerFile
+    volumes:
+      - .:/app
+    ports:
+      - 5023:5023
+    env_file: .env
+    environment:
+      DATABASE_URI: postgresql://postgres:postgresAdmin#13@db:5432/postgres
+    depends_on:
+      db:
+        condition: service_healthy
+      npm:
+        condition: service_completed_successfully
+
 volumes:
   postgres_data:
