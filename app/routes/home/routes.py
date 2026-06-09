@@ -20,7 +20,7 @@ def index():
     reserved_seats = len([seat for seat in seats if seat.status == 'occupied'])
     reserve_seat_form = ReserveSeatForm()
     remove_reservation_form = RemoveReservationForm()
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and not current_user.has_role('Admin'):
         my_reservations = Reservation.query.filter_by(user_id=current_user.id).all()
         my_reservations_ids = [reservation.seat_id for reservation in my_reservations]
         for seat in seats:
@@ -75,7 +75,11 @@ def reserve(seat_id):
 def remove_reservation(seat_id):
     seat = Seat.query.get(seat_id)
     reservation = Reservation.query.filter_by(seat_id=seat_id).first()
-    if reservation.user_id != current_user.id:
+    if not reservation or reservation.user_id != current_user.id:
+        return redirect(url_for('home.index'))
+    from app.models.auth import User
+    owner = User.query.get(reservation.user_id)
+    if owner and owner.has_role('Admin'):
         return redirect(url_for('home.index'))
 
     db.session.delete(reservation)

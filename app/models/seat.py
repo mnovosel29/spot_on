@@ -15,4 +15,4 @@ class Seat(db.Model):
     event_id = Column(Integer(), ForeignKey('event.id'), nullable=False)
     created_at = Column(DateTime(), default=datetime.utcnow)
     updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
-    event = relationship('Event', backref=backref('seats', lazy='joined'))
+    event = relationship('Event', backref=backref('seats', lazy='select'))

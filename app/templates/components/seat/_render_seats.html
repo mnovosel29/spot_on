@@ -1,5 +1,3 @@
-{% import 'components/form/_macros.html' as render_form %}
-
 {% macro render_icon(status) %}
     {% if status == 'available' %}
         <i class="fa-regular fa-star text-yellow-300"></i>
@@ -7,64 +5,198 @@
         <i class="fa-regular fa-circle-xmark text-gray-400"></i>
     {% elif status == 'occupied' %}
         <i class="fa-solid fa-star text-green-400"></i>
-    {% elif status == 'my_position' %}
-        <i class="fa-solid fa-star text-red-600 "></i>
     {% endif %}
 {% endmacro %}
 
-{% macro render_seats(seats, seat_make_not_available_form) %}
-    <div class="">
-        <h1 class="text font-bold text-white text-center bg-amber-950 rounded mb-2 p-1 w-full">
-            {{ _('Stage') }}
-        </h1>
-        <table class="w-full p-2">
-            <thead>
-            <tr>
-                <th></th>
-                {% set ns = namespace(unique_x_axis=[]) %}
-                {% for seat in seats %}
-                    {% if seat.x_axis not in ns.unique_x_axis %}
-                        <th>{{ seat.x_axis }}</th>
-                        {% set _ = ns.unique_x_axis.append(seat.x_axis) %}
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-            {% set ns = namespace(last_row=None) %}
+{% macro render_seats(seats) %}
+<div x-data="{ open: false, confirmDelete: false, seat: {} }">
+
+    {# ── Seat grid ─────────────────────────────────────────────── #}
+    <h1 class="text font-bold text-white text-center bg-amber-950 rounded mb-2 p-1 w-full">
+        {{ _('Stage') }}
+    </h1>
+    <table class="w-full p-2">
+        <thead>
+        <tr>
+            <th></th>
+            {% set ns = namespace(unique_x_axis=[]) %}
             {% for seat in seats %}
-                {% if loop.first or ns.last_row != seat.y_axis %}
-                    {% if not loop.first %}
-                        </tr>
-                    {% endif %}
-                    <tr>
-                    <td>{{ seat.y_axis }}</td>
+                {% if seat.x_axis not in ns.unique_x_axis %}
+                    <th class="text-xs px-1">{{ seat.x_axis }}</th>
+                    {% set _ = ns.unique_x_axis.append(seat.x_axis) %}
                 {% endif %}
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% set ns = namespace(last_row=None) %}
+        {% for seat in seats %}
+            {% if loop.first or ns.last_row != seat.y_axis %}
+                {% if not loop.first %}</tr>{% endif %}
+                <tr>
+                <td class="text-xs pr-1 text-gray-500">{{ seat.y_axis }}</td>
+            {% endif %}
+
             <td>
-                <div class="p-1 flex gap-1 items-center">
-                    <form method="POST" action="{{ url_for('seat.change_status', seat_id=seat.id) }}">
-                        <button type="submit">
-                            {{ render_icon(seat.status) }}
-                        </button>
-                    </form>
-                    {% if seat.status == 'occupied' %}
-                        <form method="POST" action="{{ url_for('seat.admin_remove_reservation', seat_id=seat.id) }}"
-                              onsubmit="return confirm('{{ _('Remove this reservation?') }}')">
-                            <button type="submit" title="{{ _('Remove reservation') }}">
-                                <i class="fa-solid fa-trash text-red-500 text-xs"></i>
-                            </button>
-                        </form>
-                    {% endif %}
-                </div>
+                <button
+                    type="button"
+                    class="p-1 hover:bg-gray-100 rounded transition"
+                    @click="seat = {
+                        id: {{ seat.id }},
+                        x_axis: '{{ seat.x_axis }}',
+                        y_axis: '{{ seat.y_axis }}',
+                        status: '{{ seat.status }}',
+                        change_status_url: '{{ url_for('seat.change_status', seat_id=seat.id) }}',
+                        {% if seat.status == 'occupied' and seat.reservation %}
+                        remove_url: '{{ url_for('seat.admin_remove_reservation', seat_id=seat.id) }}',
+                        partner_1: '{{ seat.reservation.partner_1 | e }}',
+                        partner_2: '{{ seat.reservation.partner_2 | e }}',
+                        reservation_code: '{{ seat.reservation.reservation_code }}',
+                        user_name: '{{ seat.reservation.user | e }}',
+                        user_email: '{{ seat.reservation.user.email | e }}',
+                        {% else %}
+                        remove_url: '',
+                        partner_1: '',
+                        partner_2: '',
+                        reservation_code: '',
+                        user_name: '',
+                        user_email: '',
+                        {% endif %}
+                    }; open = true; confirmDelete = false">
+                    {{ render_icon(seat.status) }}
+                </button>
             </td>
 
-            {% if loop.last %}
-                </tr>
-            {% endif %}
-                {% set ns.last_row = seat.y_axis %}
-            {% endfor %}
-            </tbody>
-        </table>
+            {% if loop.last %}</tr>{% endif %}
+            {% set ns.last_row = seat.y_axis %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# ── Modal ─────────────────────────────────────────────────── #}
+    <div
+        x-show="open"
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center"
+        @keydown.escape.window="open = false">
+
+        {# backdrop — clicking outside only closes when not in confirm step #}
+        <div class="absolute inset-0 bg-black/50" @click="if(!confirmDelete) open = false"></div>
+
+        {# panel #}
+        <div class="relative bg-white rounded-xl shadow-xl w-full max-w-sm mx-4 p-6 z-10">
+
+            {# ── Seat info view ──────────────────────────────────── #}
+            <div x-show="!confirmDelete">
+
+                {# header #}
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold text-gray-800">
+                        {{ _('Position') }}
+                        <span x-text="seat.x_axis + seat.y_axis"></span>
+                    </h2>
+                    <button type="button" @click="open = false" class="text-gray-400 hover:text-gray-600">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+
+                {# status badge #}
+                <div class="mb-4">
+                    <span class="text-xs font-medium px-2.5 py-1 rounded-full"
+                        :class="{
+                            'bg-yellow-100 text-yellow-700': seat.status === 'available',
+                            'bg-gray-100 text-gray-500':    seat.status === 'not_available',
+                            'bg-green-100 text-green-700':  seat.status === 'occupied'
+                        }"
+                        x-text="{
+                            available:     '{{ _('Available') }}',
+                            not_available: '{{ _('Not available') }}',
+                            occupied:      '{{ _('Occupied') }}'
+                        }[seat.status]">
+                    </span>
+                </div>
+
+                {# reservation details (occupied only) #}
+                <div x-show="seat.status === 'occupied'" class="mb-4 bg-gray-50 rounded-lg p-3 text-sm space-y-1">
+                    <p class="font-semibold text-gray-700 mb-1">{{ _('Reservation') }}</p>
+                    <p class="text-gray-600">
+                        <span class="font-medium">{{ _('Partner 1') }}:</span>
+                        <span x-text="seat.partner_1"></span>
+                    </p>
+                    <p class="text-gray-600">
+                        <span class="font-medium">{{ _('Partner 2') }}:</span>
+                        <span x-text="seat.partner_2"></span>
+                    </p>
+                    <p class="text-gray-600">
+                        <span class="font-medium">{{ _('Reserved by') }}:</span>
+                        <span x-text="seat.user_name"></span>
+                        (<span x-text="seat.user_email"></span>)
+                    </p>
+                    <p class="text-gray-400 text-xs font-mono break-all" x-text="seat.reservation_code"></p>
+                </div>
+
+                {# actions #}
+                <div class="flex flex-col gap-2">
+
+                    {# disable / enable #}
+                    <button type="button"
+                        x-show="seat.status === 'available' || seat.status === 'not_available'"
+                        @click="const f = document.createElement('form'); f.method = 'POST'; f.action = seat.change_status_url; document.body.appendChild(f); f.submit()"
+                        class="w-full py-2 px-4 rounded-lg text-sm font-medium text-white transition"
+                        :class="{
+                            'bg-gray-500 hover:bg-gray-600':     seat.status === 'available',
+                            'bg-yellow-500 hover:bg-yellow-600': seat.status === 'not_available'
+                        }"
+                        x-text="seat.status === 'available' ? '{{ _('Disable seat') }}' : '{{ _('Enable seat') }}'">
+                    </button>
+
+                    {# remove reservation — opens confirm step #}
+                    <button type="button"
+                        x-show="seat.status === 'occupied'"
+                        @click="confirmDelete = true"
+                        class="w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition">
+                        <i class="fa-solid fa-trash mr-1"></i>
+                        {{ _('Remove reservation') }}
+                    </button>
+
+                </div>
+            </div>
+
+            {# ── Confirm delete view ──────────────────────────────── #}
+            <div x-show="confirmDelete">
+
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold text-gray-800">{{ _('Confirm removal') }}</h2>
+                    <button type="button" @click="confirmDelete = false" class="text-gray-400 hover:text-gray-600">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+
+                <p class="text-sm text-gray-600 mb-1">
+                    {{ _('Remove reservation for position') }}
+                    <strong x-text="seat.x_axis + seat.y_axis"></strong>?
+                </p>
+                <p class="text-sm text-gray-500 mb-6">
+                    <span x-text="seat.partner_1"></span> &amp; <span x-text="seat.partner_2"></span>
+                </p>
+
+                <div class="flex gap-2">
+                    <button type="button"
+                        @click="confirmDelete = false"
+                        class="flex-1 py-2 px-4 rounded-lg text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition">
+                        {{ _('Cancel') }}
+                    </button>
+                    <button type="button"
+                        @click="const f = document.createElement('form'); f.method = 'POST'; f.action = seat.remove_url; document.body.appendChild(f); f.submit()"
+                        class="flex-1 py-2 px-4 rounded-lg text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition">
+                        <i class="fa-solid fa-trash mr-1"></i>
+                        {{ _('Yes, remove') }}
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
+</div>
 {% endmacro %}

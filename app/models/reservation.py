@@ -21,4 +21,4 @@ class Reservation(db.Model):
     created_at = Column(DateTime(), default=datetime.utcnow)
     updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     seat = relationship('Seat', backref=backref('reservation', uselist=False, lazy='joined'))
-    user = relationship('User', backref=backref('reservations', lazy='joined'))
+    user = relationship('User', backref=backref('reservations', lazy='select'))

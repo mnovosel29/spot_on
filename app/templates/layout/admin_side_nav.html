@@ -41,5 +41,20 @@
                     {{ _('Events') }}
                 </strong>
             </a>
+        </li>
+        <li>
+            <a href="{{ url_for('event.seats', event_id=1) }}"
+                    {% if request.endpoint == 'event.seats' %}
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    {% else %}
+               class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+                    {% endif %}
+            >
+                <i class="fa-solid fa-table-cells"></i>
+                <strong>
+                    {{ _('Seats') }}
+                </strong>
+            </a>
+        </li>
     </ul>
 </nav>
