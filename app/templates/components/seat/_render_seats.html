@@ -41,12 +41,20 @@
                     <td>{{ seat.y_axis }}</td>
                 {% endif %}
             <td>
-                <div class="p-1">
+                <div class="p-1 flex gap-1 items-center">
                     <form method="POST" action="{{ url_for('seat.change_status', seat_id=seat.id) }}">
                         <button type="submit">
                             {{ render_icon(seat.status) }}
                         </button>
                     </form>
+                    {% if seat.status == 'occupied' %}
+                        <form method="POST" action="{{ url_for('seat.admin_remove_reservation', seat_id=seat.id) }}"
+                              onsubmit="return confirm('{{ _('Remove this reservation?') }}')">
+                            <button type="submit" title="{{ _('Remove reservation') }}">
+                                <i class="fa-solid fa-trash text-red-500 text-xs"></i>
+                            </button>
+                        </form>
+                    {% endif %}
                 </div>
             </td>
 
