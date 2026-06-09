@@ -9,3 +9,4 @@ app.db
 messages.pot
 static/images/
 static/temp/
+app/static/dist/css/output.css
