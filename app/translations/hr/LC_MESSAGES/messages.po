@@ -593,6 +593,14 @@ msgstr "Zaboravili ste lozinku?"
 msgid "Resend confirmation email"
 msgstr "Ponovno pošalji email za potvrdu"
 
+#: app/templates/admin/users/detail.html
+msgid "Account status"
+msgstr "Status računa"
+
+#: app/templates/admin/users/detail.html
+msgid "Manage activation and email confirmation"
+msgstr "Upravljanje aktivacijom i potvrdom emaila"
+
 #: app/routes/users/routes.py
 msgid "Confirmation email sent successfully."
 msgstr "Email za potvrdu uspješno poslan."

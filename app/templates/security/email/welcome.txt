@@ -1,14 +1,28 @@
-{# This template receives the following context:
+{#
   confirmation_link - the link that should be fetched (GET) to confirm
-  confirmation_token - this token is part of confirmation link - but can be used to
-    construct arbitrary URLs for redirecting.
   user - the entire user model object
   security - the Flask-Security configuration
 #}
-{{ _('Welcome %(email)s!', email=user.email) }}
+447. ROĐENDANSKI BAL GRADA KARLOVCA
+====================================
+
+Poštovani/a {{ user.first_name }} {{ user.last_name }},
+
+Hvala što ste se registrirali za rezervaciju mjesta na 447. Rođendanskom balu Grada Karlovca.
+
+Kako biste aktivirali vaš račun i mogli rezervirati svoju poziciju, molimo potvrdite vašu email adresu putem sljedeće veze:
 
 {% if security.confirmable %}
-{{ _('You can confirm your email through the link below:') }}
-
 {{ confirmation_link }}
 {% endif %}
+
+------------------------------------
+DETALJI DOGAĐAJA
+Datum:   Ponedjeljak, 13. srpnja 2026.
+Vrijeme: 20:00 sati
+Mjesto:  Igralište kod Sokolskog doma, Karlovac
+------------------------------------
+
+Ukoliko se niste registrirali putem ove stranice, molimo zanemarite ovu poruku.
+
+{{ config['APP_NAME'] }} · Karlovac, Hrvatska

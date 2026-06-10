@@ -3,57 +3,49 @@
         <li>
             <a href="{{ url_for('dashboard.index') }}"
                     {% if request.endpoint == 'dashboard.index' %}
-               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-700 text-sm text-white rounded-lg"
                     {% else %}
-               class="flex items center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+               class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white"
                     {% endif %}
             >
-                <i class="fa-solid fa-chart-pie"></i>
-                <strong>
-                    {{ _('Dashboard') }}
-                </strong>
+                <i class="fa-solid fa-chart-pie w-4"></i>
+                <strong>{{ _('Dashboard') }}</strong>
             </a>
         </li>
         <li>
             <a href="{{ url_for('users.index') }}"
-                    {% if request.endpoint == 'users.index' %}
-               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    {% if 'users.' in request.endpoint %}
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-700 text-sm text-white rounded-lg"
                     {% else %}
-               class="flex items center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+               class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white"
                     {% endif %}
             >
-                <i class="fa-solid fa-users"></i>
-                <strong>
-                    {{ _('Users') }}
-                </strong>
+                <i class="fa-solid fa-users w-4"></i>
+                <strong>{{ _('Users') }}</strong>
             </a>
         </li>
         <li>
             <a href="{{ url_for('event.index') }}"
-                    {% if request.endpoint == 'event.index' %}
-               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    {% if 'event.' in request.endpoint %}
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-700 text-sm text-white rounded-lg"
                     {% else %}
-               class="flex items center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+               class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white"
                     {% endif %}
             >
-                <i class="fa-regular fa-calendar-plus"></i>
-                <strong>
-                    {{ _('Events') }}
-                </strong>
+                <i class="fa-regular fa-calendar-plus w-4"></i>
+                <strong>{{ _('Events') }}</strong>
             </a>
         </li>
         <li>
             <a href="{{ url_for('event.seats', event_id=1) }}"
                     {% if request.endpoint == 'event.seats' %}
-               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+               class="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-700 text-sm text-white rounded-lg"
                     {% else %}
-               class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 hover:text-gray-100"
+               class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white"
                     {% endif %}
             >
-                <i class="fa-solid fa-table-cells"></i>
-                <strong>
-                    {{ _('Seats') }}
-                </strong>
+                <i class="fa-solid fa-table-cells w-4"></i>
+                <strong>{{ _('Seats') }}</strong>
             </a>
         </li>
     </ul>
