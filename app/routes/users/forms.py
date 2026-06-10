@@ -91,5 +91,9 @@ class UserConfirmForm(FlaskForm):
     submit = SubmitField(lazy_gettext('Confirm user'))
 
 
+class UserResendConfirmationForm(FlaskForm):
+    submit = SubmitField(lazy_gettext('Resend confirmation email'))
+
+
 class UserDeleteForm(FlaskForm):
     submit = SubmitField(lazy_gettext('Delete user'))

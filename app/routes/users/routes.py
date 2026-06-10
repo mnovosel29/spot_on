@@ -7,6 +7,7 @@ from PIL import Image
 from flask import render_template, request, flash, redirect, url_for
 from flask_babel import gettext
 from flask_security import hash_password, roles_required
+from flask_security.confirmable import send_confirmation_instructions
 from werkzeug.utils import secure_filename
 
 from app.models.avatar import Avatar
@@ -19,6 +20,7 @@ from app.routes.users.forms import (
     UserActivateForm,
     UserDeactivateForm,
     UserConfirmForm,
+    UserResendConfirmationForm,
     UserDeleteForm,
     UserAvatarForm,
     UserAvatarDeleteForm
@@ -40,6 +42,7 @@ def _initialize_forms(user):
         'user_activate_form': UserActivateForm(obj=user),
         'user_deactivate_form': UserDeactivateForm(obj=user),
         'user_confirm_form': UserConfirmForm(obj=user),
+        'user_resend_confirmation_form': UserResendConfirmationForm(obj=user),
         'user_delete_form': UserDeleteForm(obj=user)
     }
     forms['user_roles_form'].roles.choices = [(role.id, role.name) for role in roles]
@@ -268,6 +271,21 @@ def confirm(user_id):
         user.fs_uniquifier = str(uuid.uuid4().hex)
         db.session.commit()
         flash(gettext('User confirmed successfully.'), 'success')
+    else:
+        return render_template('admin/users/detail.html', user=user, **forms)
+
+    return redirect(url_for('users.detail', user_id=user_id))
+
+
+@bp.route('/<int:user_id>/resend_confirmation', methods=['POST'])
+@roles_required('Admin')
+def resend_confirmation(user_id):
+    user = User.query.get(user_id)
+    forms = _initialize_forms(user)
+    user_resend_confirmation_form = forms['user_resend_confirmation_form']
+    if user_resend_confirmation_form.validate_on_submit():
+        send_confirmation_instructions(user)
+        flash(gettext('Confirmation email sent successfully.'), 'success')
     else:
         return render_template('admin/users/detail.html', user=user, **forms)
 

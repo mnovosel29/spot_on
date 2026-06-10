@@ -589,6 +589,14 @@ msgstr "Zapamti me"
 msgid "Forgot password?"
 msgstr "Zaboravili ste lozinku?"
 
+#: app/templates/security/login_user.html
+msgid "Resend confirmation email"
+msgstr "Ponovno pošalji email za potvrdu"
+
+#: app/routes/users/routes.py
+msgid "Confirmation email sent successfully."
+msgstr "Email za potvrdu uspješno poslan."
+
 #: app/templates/security/email/reset_instructions.html:66
 #: app/templates/security/email/reset_notice.html:54
 #: app/templates/security/email/welcome.html:65

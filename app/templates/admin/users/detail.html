@@ -109,7 +109,10 @@
                             </strong>
                         </div>
                         {% if user.confirmed_at is none %}
-                            {{ render_small_form(user_confirm_form, action=url_for('users.confirm', user_id=user.id)) }}
+                            <div class="flex items-center gap-2">
+                                {{ render_small_form(user_confirm_form, action=url_for('users.confirm', user_id=user.id)) }}
+                                {{ render_small_form(user_resend_confirmation_form, action=url_for('users.resend_confirmation', user_id=user.id)) }}
+                            </div>
                         {% endif %}
                     </div>
                 </div>
