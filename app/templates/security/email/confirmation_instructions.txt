@@ -1,0 +1,28 @@
+{#
+  confirmation_link - the link that should be fetched (GET) to confirm
+  confirmation_token - this token is part of confirmation link
+  user - the entire user model object
+  security - the Flask-Security configuration
+#}
+447. ROĐENDANSKI BAL GRADA KARLOVCA
+====================================
+
+Poštovani/a {{ user.first_name }} {{ user.last_name }},
+
+Zaprimili smo zahtjev za ponovnim slanjem uputa za potvrdu vašeg računa na
+447. Rođendanskom balu Grada Karlovca.
+
+Potvrdite vašu email adresu putem sljedeće veze:
+
+{{ confirmation_link }}
+
+------------------------------------
+DETALJI DOGAĐAJA
+Datum:   Ponedjeljak, 13. srpnja 2026.
+Vrijeme: 20:00 sati
+Mjesto:  Igralište kod Sokolskog doma, Karlovac
+------------------------------------
+
+Ukoliko niste zatražili slanje ove poruke, molimo zanemarite je.
+
+{{ config['APP_NAME'] }} · Karlovac, Hrvatska
